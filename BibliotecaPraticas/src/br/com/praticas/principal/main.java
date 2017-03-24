@@ -7,7 +7,7 @@ package br.com.praticas.principal;
 
 /**
  *
- * @author athay
+ * @author VAAR
  */
 public class main {
 
