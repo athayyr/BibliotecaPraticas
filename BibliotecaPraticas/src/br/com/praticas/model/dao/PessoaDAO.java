@@ -9,7 +9,7 @@ package br.com.praticas.model.dao;
 import br.com.praticas.connection.ConnectionFactory;
 import br.com.praticas.model.bean.Pessoa;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,8 +24,8 @@ import javax.swing.JOptionPane;
 public class PessoaDAO {
 
     private Connection connection;
-
-    public void create(Pessoa pessoa) {
+    
+    public boolean create(Pessoa pessoa) {
         connection = ConnectionFactory.getConnection();
 
         PreparedStatement st = null;
@@ -33,14 +33,16 @@ public class PessoaDAO {
         try {
             st = connection.prepareStatement("INSERT INTO pessoa (nome,nascimento,endereco) VALUES(?,?,?)");
             st.setString(1, pessoa.getNome());
-            //st.setDate(2, new Date(pessoa.getDataNascimento().getTimeInMillis()));
+            st.setDate(2, new java.sql.Date(pessoa.getDataNascimento().getTime()));
             st.setInt(3, pessoa.getEndereco().getId());
 
             st.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
+            return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "ERRO ao cadastrar!");
+            return false;
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
