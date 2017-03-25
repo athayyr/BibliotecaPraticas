@@ -23,12 +23,15 @@ public class Util {
 
         try {
             Date date = sdf.parse(data);
-            
             return date;
         } catch (ParseException ex) {
             Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+    
+    public static java.sql.Date stringToDateSql(String data){ 
+        return new java.sql.Date(stringParaDate(data).getTime());
     }
 
 }
