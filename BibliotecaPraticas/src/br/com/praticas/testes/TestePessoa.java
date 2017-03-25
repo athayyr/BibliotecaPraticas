@@ -38,7 +38,6 @@ public class TestePessoa {
         
     public void iniciar(){
         
-    
         System.out.println("Menu");
         System.out.println("Informe o nome");
         nome = sc.nextLine();
