@@ -25,7 +25,7 @@ public class PessoaDAOTest {
     public void testSomeMethod() {
         
         Endereco endereco = new Endereco();
-        endereco.setId(4);
+        endereco.setId(2);
         
         
         Pessoa pessoa = new Pessoa("VAAR", Util.stringParaDate("30/05/1997"), endereco);
