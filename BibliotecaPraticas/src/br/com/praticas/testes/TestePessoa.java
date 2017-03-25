@@ -10,13 +10,9 @@ import br.com.praticas.model.bean.Endereco;
 import br.com.praticas.model.bean.Pessoa;
 import br.com.praticas.model.dao.EnderecoDAO;
 import br.com.praticas.model.dao.PessoaDAO;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import br.com.praticas.util.Util;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -48,14 +44,7 @@ public class TestePessoa {
         nome = sc.nextLine();
         System.out.println("Informe sua data de nascimento como no exemplo");
         System.out.println("exemplo: 30/05/1997");
-        //converter String para calendar
         data = sc.nextLine();
-        System.out.println("DOCUMENTAÇÂO");
-        System.out.println("Informe seu CPF");
-        sc.nextLine();
-        cpf = sc.nextInt();
-        System.out.println("Informe seu RG");
-        rg = sc.nextInt();
         System.out.println("ENDEREÇO");
         System.out.println("Informe sua Cidade");
         cidade = sc.nextLine();
@@ -64,14 +53,23 @@ public class TestePessoa {
         System.out.println("Informe o Numero de sua residencia");
         numero = sc.nextLine();
         
-        endereco.setCidade(cidade);
-        endereco.setRua(rua);
-        endereco.setNumero(numero);
-        enderecoDAO.create(endereco);
+        Endereco enderec = new Endereco("teste", "teste", "teste");
+        enderecoDAO = new EnderecoDAO();
+        System.out.println("Aqui");
+        if(enderecoDAO.create(enderec)){
+            System.out.println("Teste de inserção de endereco SUCESSO");
+        }else{
+            System.out.println("Teste de inserção de endereco deu ERRO");
+        }
+        nascimento = Util.stringParaDate(data);
         
-        pessoa.setNome(nome);
-        pessoa.setDataNascimento(nascimento);
-        pessoaDAO.create(pessoa);
+        pessoa = new Pessoa(nome, nascimento, endereco);
+        pessoaDAO = new PessoaDAO();
+        if(pessoaDAO.create(pessoa)){
+            System.out.println("Teste de inserção da pessoa SUCESSO");
+        }else{
+            System.out.println("Teste de inserção da pessoa deu ERRO");
+        }
     }
 
 }
