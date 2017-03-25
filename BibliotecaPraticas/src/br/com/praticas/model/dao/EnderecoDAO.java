@@ -19,14 +19,14 @@ import javax.swing.JOptionPane;
  */
 public class EnderecoDAO {
     
-    public void create(Endereco endereco) {
+    public boolean create(Endereco endereco) {
         
         Connection connection = ConnectionFactory.getConnection();
         
         PreparedStatement st = null;
         
         try {
-            st = connection.prepareStatement("INSERT INTO endereco (rua,nuemro,cidade) VALUES (?,?,?)");
+            st = connection.prepareStatement("INSERT INTO endereco (rua,numero,cidade) VALUES (?,?,?)");
             st.setString(1, endereco.getRua());
             st.setString(2, endereco.getNumero());
             st.setString(3, endereco.getCidade());
@@ -34,8 +34,10 @@ public class EnderecoDAO {
             st.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
+            return true;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERRO ao cadastrar o endereco: " + e);
+            return false;
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
