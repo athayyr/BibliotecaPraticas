@@ -21,7 +21,7 @@ public class EnderecoDAOTest {
     @Test
     public void create() {
         
-        Endereco endereco = new Endereco("Maria", "96", "Coremas");     
+        Endereco endereco = new Endereco("Maria", "251", "Coremas");     
         
         EnderecoDAO dao = new EnderecoDAO();
         
