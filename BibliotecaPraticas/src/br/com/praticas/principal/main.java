@@ -5,6 +5,8 @@
  */
 package br.com.praticas.principal;
 
+import br.com.praticas.testes.TestePessoa;
+
 /**
  *
  * @author VAAR
@@ -15,7 +17,9 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        TestePessoa teste = new TestePessoa();
+        
+        teste.iniciar();
     }
     
 }
