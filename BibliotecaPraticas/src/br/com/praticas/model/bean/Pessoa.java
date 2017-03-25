@@ -19,6 +19,15 @@ public class Pessoa {
     private Date nascimento;
     private Endereco endereco;
 
+    public Pessoa() {
+    }
+    
+    public Pessoa(String nome, Date nascimento, Endereco endereco) {
+        this.nome = nome;
+        this.nascimento = nascimento;
+        this.endereco = endereco;
+    }
+
     public int getId() {
         return this.id;
     }
