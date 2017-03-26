@@ -8,6 +8,7 @@ package br.com.praticas.model.dao;
 
 import br.com.praticas.connection.ConnectionFactory;
 import br.com.praticas.model.bean.Pessoa;
+import br.com.praticas.util.Util;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.PreparedStatement;
@@ -57,8 +58,9 @@ public class PessoaDAO {
             st = connection.prepareStatement("UPDATE pessoa SET nome = ?, nascimento = ?, endereco = ? WHERE id = ? ");
 
             st.setString(1, pessoa.getNome());
-            //st.setDate(2, new Date(pessoa.getDataNascimento().getTimeInMillis()));
+            st.setDate(2,new java.sql.Date(pessoa.getDataNascimento().getTime()));
             st.setInt(3, pessoa.getEndereco().getId());
+            st.setInt(4, pessoa.getId());
 
             st.executeUpdate();
 
@@ -105,7 +107,7 @@ public class PessoaDAO {
         PreparedStatement st = null;
 
         try {
-            st = connection.prepareStatement("SELECT * FROM Pessoa WHERE id=?");
+            st = connection.prepareStatement("SELECT * FROM pessoa WHERE id=?");
             
             st.setInt(1, id);
             
@@ -114,9 +116,11 @@ public class PessoaDAO {
             if(rs.next()) {
                 pessoa = new Pessoa();
 
-                String nome = rs.getString("nome");
+                String nome = rs.getString("testeUp");
                 
+                pessoa.setId(id);
                 pessoa.setNome(nome);
+                pessoa.setDataNascimento(Util.stringParaDate("30/02/2017"));
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "ERRO ao listar!");
