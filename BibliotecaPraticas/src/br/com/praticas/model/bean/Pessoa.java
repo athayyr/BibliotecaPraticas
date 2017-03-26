@@ -60,4 +60,9 @@ public class Pessoa {
         this.endereco = endereco;
     }
 
+    @Override
+    public String toString() {
+        return "Pessoa{" + "id=" + id + ", nome=" + nome + ", nascimento=" + nascimento + ", endereco=" + endereco + '}';
+    }
+
 }
