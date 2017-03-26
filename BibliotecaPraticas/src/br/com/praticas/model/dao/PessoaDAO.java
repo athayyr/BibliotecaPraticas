@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -48,57 +50,6 @@ public class PessoaDAO {
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
-    }
-
-    public void update(Pessoa pessoa) {
-        connection = ConnectionFactory.getConnection();
-
-        PreparedStatement st = null;
-
-        try {
-            st = connection.prepareStatement("UPDATE pessoa SET nome = ?, nascimento = ?, endereco = ? WHERE id = ? ");
-
-            st.setString(1, pessoa.getNome());
-            st.setDate(2,new java.sql.Date(pessoa.getDataNascimento().getTime()));
-            st.setInt(3, pessoa.getEndereco().getId());
-            st.setInt(4, pessoa.getId());
-
-            st.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Atualizado com Sucesso!");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "ERRO ao atualizar!");
-        } finally {
-            ConnectionFactory.closeConnection(connection, st);
-        }
-    }
-
-    public List<Pessoa> list() {
-        List<Pessoa> lista = new ArrayList<Pessoa>();
-        connection = ConnectionFactory.getConnection();
-
-        PreparedStatement st = null;
-
-        try {
-            st = connection.prepareStatement("SELECT * FROM Pessoa;");
-
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                Pessoa pessoa = new Pessoa();
-
-                int id = rs.getInt("id");
-                String nome = rs.getString("nome");
-
-                lista.add(pessoa);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "ERRO ao listar!");
-        } finally {
-            ConnectionFactory.closeConnection(connection, st);
-        }
-
-        return lista;
     }
 
     public Pessoa search(int id) {
@@ -143,5 +94,93 @@ public class PessoaDAO {
 
         return pessoa;
     }
+    
+    public void update(Pessoa pessoa) {
+        connection = ConnectionFactory.getConnection();
+
+        PreparedStatement st = null;
+
+        try {
+            st = connection.prepareStatement("UPDATE pessoa SET nome = ?, nascimento = ?, endereco = ? WHERE id = ? ");
+
+            st.setString(1, pessoa.getNome());
+            st.setDate(2,new java.sql.Date(pessoa.getDataNascimento().getTime()));
+            st.setInt(3, pessoa.getEndereco().getId());
+            st.setInt(4, pessoa.getId());
+
+            st.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Atualizado com Sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERRO ao atualizar!");
+        } finally {
+            ConnectionFactory.closeConnection(connection, st);
+        }
+    }
+
+    public boolean delete(Pessoa pessoa){
+        connection = ConnectionFactory.getConnection();
+        
+        PreparedStatement st = null;
+        
+        try {
+            st = connection.prepareStatement("DELETE FROM pessoa WHERE id = ?");
+            
+            st.setInt(1, pessoa.getId());
+            
+            st.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Excluido com Sucesso!");
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(PessoaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+            JOptionPane.showMessageDialog(null, "ERRO ao Excluir!");
+            
+            return false;
+        }finally{
+            ConnectionFactory.closeConnection(connection, st);
+        }
+        
+    }
+    
+    public List<Pessoa> list() {
+        List<Pessoa> lista = new ArrayList<Pessoa>();
+        connection = ConnectionFactory.getConnection();
+
+        PreparedStatement st = null;
+
+        try {
+            st = connection.prepareStatement("SELECT p.id, p.nome, p.nascimento, e.id as eid, e.rua as rua, e.numero as numero, e.cidade as cidade FROM public.pessoa p, public.endereco e WHERE p.endereco=e.id");
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Pessoa pessoa = new Pessoa();
+
+                pessoa.setId(rs.getInt("id"));
+                pessoa.setNome(rs.getString("nome"));
+                pessoa.setDataNascimento(rs.getDate("nascimento"));
+                
+                Endereco endereco = new Endereco();
+                endereco.setId(rs.getInt("eid"));
+                endereco.setRua(rs.getString("rua"));
+                endereco.setCidade(rs.getString("cidade"));
+                endereco.setNumero("numero");
+                
+                pessoa.setEndereco(endereco);
+                
+                lista.add(pessoa);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERRO ao listar!");
+        } finally {
+            ConnectionFactory.closeConnection(connection, st);
+        }
+
+        return lista;
+    }
+
 
 }
