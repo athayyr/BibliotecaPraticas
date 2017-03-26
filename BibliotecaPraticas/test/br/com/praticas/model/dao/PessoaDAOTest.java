@@ -25,10 +25,10 @@ public class PessoaDAOTest {
     public void testSomeMethod() {
         
         Endereco endereco = new Endereco();
-        endereco.setId(2);
+        endereco.setId(11);
         
         
-        Pessoa pessoa = new Pessoa("VAAR", Util.stringParaDate("30/05/1997"), endereco);
+        Pessoa pessoa = new Pessoa("teste", Util.stringParaDate("30/05/1997"), endereco);
         
         PessoaDAO pessoaDAO = new PessoaDAO();
         
@@ -37,6 +37,12 @@ public class PessoaDAOTest {
         }else{
             fail("ERRO");
         }
+        
+        pessoa = pessoaDAO.search(7);
+        
+        pessoaDAO.update(pessoa);
     }
+    
+    
     
 }
