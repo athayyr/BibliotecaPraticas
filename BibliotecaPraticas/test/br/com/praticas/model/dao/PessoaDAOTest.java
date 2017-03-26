@@ -40,6 +40,8 @@ public class PessoaDAOTest {
         
         pessoa = pessoaDAO.search(7);
         
+        pessoa.setNome("teste atualização");
+        
         pessoaDAO.update(pessoa);
     }
     
