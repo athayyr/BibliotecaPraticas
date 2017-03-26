@@ -11,6 +11,7 @@ import br.com.praticas.util.Util;
 import java.util.Date;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -22,8 +23,8 @@ public class PessoaDAOTest {
     }
 
     @Test
+    @Ignore
     public void testSomeMethod() {
-        
         Endereco endereco = new Endereco();
         endereco.setId(11);
         
@@ -45,6 +46,34 @@ public class PessoaDAOTest {
         pessoaDAO.update(pessoa);
     }
     
+    @Test
+    @Ignore
+    public void testSomeMethodListar() {
+        Endereco endereco = new Endereco();       
+        
+        Pessoa pessoa = new Pessoa("teste", Util.stringParaDate("30/05/1997"), endereco);
+        
+        PessoaDAO pessoaDAO = new PessoaDAO();
+        
+        for(Pessoa p : pessoaDAO.list()){
+            System.out.println(p);
+        }
+    }
     
-    
+    @Test
+    public void testSomeMethodExcluir() {
+        Endereco endereco = new Endereco();       
+        
+        Pessoa pessoa = new Pessoa("teste", Util.stringParaDate("30/05/1997"), endereco);
+        
+        PessoaDAO pessoaDAO = new PessoaDAO();
+        
+        
+        for(int i = 11; i<21; i++){
+          pessoa = pessoaDAO.search(i);
+        
+            pessoaDAO.delete(pessoa);  
+        }
+        
+    }
 }
