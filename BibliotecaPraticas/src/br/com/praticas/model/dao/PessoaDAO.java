@@ -116,11 +116,14 @@ public class PessoaDAO {
             if(rs.next()) {
                 pessoa = new Pessoa();
 
-                String nome = rs.getString("testeUp");
+                String nome = rs.getString("nome");
+                Date date = rs.getDate("nascimento");
+                
                 
                 pessoa.setId(id);
                 pessoa.setNome(nome);
-                pessoa.setDataNascimento(Util.stringParaDate("30/02/2017"));
+                pessoa.setDataNascimento(date);
+                
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "ERRO ao listar!");
