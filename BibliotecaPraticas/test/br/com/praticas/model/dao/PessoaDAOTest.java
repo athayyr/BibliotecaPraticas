@@ -15,7 +15,7 @@ import org.junit.Ignore;
 
 /**
  *
- * @author athay
+ * @author VAAR
  */
 public class PessoaDAOTest {
     
