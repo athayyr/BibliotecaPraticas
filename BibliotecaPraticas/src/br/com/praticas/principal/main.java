@@ -59,7 +59,9 @@ public class main {
             switch(op){
                 case 1:{
                     autorDao.create(a);
+                    
                     enderecoDAO.create(e);
+                    
                     pessoaDAO.create(p);
                     break;
                 }
@@ -68,7 +70,7 @@ public class main {
                     autorDao.update(a);
                     
                     e.setCidade("CidadeEditada");
-                    //enderecoDAO.update(e);
+                    enderecoDAO.update(e);
                         
                     p.setNome("NomeEditado");
                     pessoaDAO.update(p);
@@ -85,6 +87,11 @@ public class main {
                         System.out.println(la);
                     }
                     
+                    System.out.println("Listando Enderecos...");
+                    for(Endereco le : enderecoDAO.list()){
+                        System.out.println(le);
+                    }
+                    
                     
                     break;
                 }
@@ -92,6 +99,8 @@ public class main {
                     pessoaDAO.delete(p);
                     
                     autorDao.delete(a);
+                    
+                    enderecoDAO.delete(e);
                     
                     break;
                 }
