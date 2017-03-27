@@ -20,150 +20,142 @@ import javax.swing.JOptionPane;
  * @author JoséHigor
  */
 public class AutorDAO {
+
     private Connection connection;
-    
-    public boolean create(Autor a){
+
+    public boolean create(Autor a) {
         connection = ConnectionFactory.getConnection();
-        PreparedStatement st=null;
-        try{
-            String sql="INSERT INTO autor(nome) VALUES (?);";
+        PreparedStatement st = null;
+        try {
+            String sql = "INSERT INTO autor(nome) VALUES (?)";
             st = connection.prepareStatement(sql);
-            
+
             st.setString(1, a.getNome());
-            st.executeUpdate(sql);
-            
+            st.executeUpdate();
+
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
             return true;
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
             return false;
-        }
-        finally{
+        } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
     }
-    public boolean update(Autor a){
+
+    public boolean update(Autor a) {
         connection = ConnectionFactory.getConnection();
-        PreparedStatement st=null;
-        try{
-            String sql="UPDATE Autor SET nome=? WHERE id=?;";
+        PreparedStatement st = null;
+        try {
+            String sql = "UPDATE Autor SET nome=? WHERE id=?;";
             st = connection.prepareStatement(sql);
-            
+
             st.setString(1, a.getNome());
             st.setInt(2, a.getId());
-            
-            st.executeUpdate(sql);
-            
+
+            st.executeUpdate();
+
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
             return true;
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar!");
             return false;
-        }
-        finally{
+        } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
     }
-    
-    public List<Autor> list(){
+
+    public List<Autor> list() {
         List<Autor> lista = new ArrayList<Autor>();
-        
+
         connection = ConnectionFactory.getConnection();
         PreparedStatement st = null;
         ResultSet rs = null;
-        
-        try{
-            String sql="SELECT * FROM autor;";
+
+        try {
+            String sql = "SELECT * FROM autor;";
             st = connection.prepareStatement(sql);
-            
+
             rs = st.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 Autor a = new Autor();
-                
+
                 int id = rs.getInt("id");
                 String nome = rs.getString("Nome");
-                
+
                 a.setId(id);
-                a.setNome(nome);         
-      
+                a.setNome(nome);
+
                 lista.add(a);
             }
 
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Listar Autores!");
-        }
-        finally{
+        } finally {
             ConnectionFactory.closeConnection(connection, st, rs);
         }
 
         return lista;
     }
-    
-    public Autor search(int id){
+
+    public Autor search(int id) {
         Autor a = null;
-        
+
         connection = ConnectionFactory.getConnection();
         PreparedStatement st = null;
         ResultSet rs = null;
-        
-        try{
+
+        try {
             String sql = "SELECT * FROM autor WHERE id=?;";
             st = connection.prepareStatement(sql);
-            
+
             st.setInt(1, id);
-            
+
             rs = st.executeQuery();
-            
-            if(rs.next()){
-                a= new Autor();
-                
+
+            if (rs.next()) {
+                a = new Autor();
+
                 String nome = rs.getString("nome");
-                
+
                 a.setId(id);
                 a.setNome(nome);
             }
             return a;
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar autor");
             return null;
-        }
-        finally{
+        } finally {
             ConnectionFactory.closeConnection(connection, st, rs);
         }
     }
-    
-    public boolean delete(Autor a){
-        connection=ConnectionFactory.getConnection();
-        
-        PreparedStatement st=null;
-        
-        try{
-           String sql = "DELETE FROM autor WHERE id=?;";
-           
-           st=connection.prepareStatement(sql);
-           
-           st.setInt(1, a.getId());
-           
-           st.executeUpdate();
-           
-           JOptionPane.showMessageDialog(null, "Autor removido");
-           
-           return true;
-           
-        }
-        catch(SQLException ex){
+
+    public boolean delete(Autor a) {
+        connection = ConnectionFactory.getConnection();
+
+        PreparedStatement st = null;
+
+        try {
+            String sql = "DELETE FROM autor WHERE id=?;";
+
+            st = connection.prepareStatement(sql);
+
+            st.setInt(1, a.getId());
+
+            st.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Autor removido");
+
+            return true;
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao remover Autor!");
             return false;
-        }
-        finally{
+        } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
-       
+
     }
-    
+
 }
