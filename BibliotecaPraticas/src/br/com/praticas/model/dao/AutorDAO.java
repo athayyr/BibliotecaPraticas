@@ -36,7 +36,7 @@ public class AutorDAO {
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar!");
             return false;
         } finally {
             ConnectionFactory.closeConnection(connection, st);
