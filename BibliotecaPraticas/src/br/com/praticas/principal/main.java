@@ -11,7 +11,6 @@ import br.com.praticas.model.bean.Pessoa;
 import br.com.praticas.model.dao.AutorDAO;
 import br.com.praticas.model.dao.EnderecoDAO;
 import br.com.praticas.model.dao.PessoaDAO;
-import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -63,6 +62,8 @@ public class main {
                     enderecoDAO.create(e);
                     
                     pessoaDAO.create(p);
+                    
+                    System.out.println("Criados...");
                     break;
                 }
                 case 2:{
