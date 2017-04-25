@@ -9,7 +9,6 @@ package br.com.praticas.model.dao;
 import br.com.praticas.connection.ConnectionFactory;
 import br.com.praticas.model.bean.Endereco;
 import br.com.praticas.model.bean.Pessoa;
-import br.com.praticas.util.Util;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.PreparedStatement;
@@ -25,10 +24,11 @@ import javax.swing.JOptionPane;
  *
  * @author VAAR
  */
-public class PessoaDAO {
+public class PessoaDAO implements IPessoaDAO {
 
     private Connection connection;
     
+    @Override
     public boolean create(Pessoa pessoa) {
         connection = ConnectionFactory.getConnection();
 
@@ -37,7 +37,7 @@ public class PessoaDAO {
         try {
             st = connection.prepareStatement("INSERT INTO pessoa (nome,nascimento,endereco) VALUES(?,?,?)");
             st.setString(1, pessoa.getNome());
-            st.setDate(2, new java.sql.Date(pessoa.getDataNascimento().getTime()));
+            st.setDate(2, new java.sql.Date(pessoa.getNascimento().getTime()));
             st.setInt(3, pessoa.getEndereco().getId());
 
             st.executeUpdate();
@@ -52,6 +52,7 @@ public class PessoaDAO {
         }
     }
 
+    @Override
     public Pessoa search(int id) {
         Pessoa pessoa = null;
         connection = ConnectionFactory.getConnection();
@@ -59,7 +60,7 @@ public class PessoaDAO {
         PreparedStatement st = null;
 
         try {
-            st = connection.prepareStatement("SELECT p.id, p.nome, p.nascimento, e.id as eid, e.rua as rua, e.numero as numero, e.cidade as cidade FROM public.pessoa p, public.endereco e WHERE p.endereco=e.id AND p.id=?");
+            st = connection.prepareStatement("SELECT id, nome, nascimento, endereco FROM public.pessoa WHERE id=?");
             
             st.setInt(1, id);
             
@@ -67,23 +68,12 @@ public class PessoaDAO {
 
             if(rs.next()) {
                 pessoa = new Pessoa();
-
-                //String nome = rs.getString("nome");
-                //Date date = rs.getDate("nascimento");
+                Endereco endereco = new Endereco();
                 
                 pessoa.setId(id);
                 pessoa.setNome(rs.getString("nome"));
-                pessoa.setDataNascimento(rs.getDate("nascimento"));
-                
-                Endereco endereco = new Endereco();
-                endereco.setId(rs.getInt("eid"));
-                endereco.setRua(rs.getString("rua"));
-                endereco.setCidade(rs.getString("cidade"));
-                endereco.setNumero("numero");
-                
-                pessoa.setEndereco(endereco);
-                
-                System.out.println(pessoa + " "+ endereco);
+                pessoa.setNascimento(rs.getDate("nascimento"));
+                pessoa.setEndereco(new EnderecoDAO().search(rs.getInt("endereco")));
                 
             }
         } catch (SQLException ex) {
@@ -95,6 +85,7 @@ public class PessoaDAO {
         return pessoa;
     }
     
+    @Override
     public void update(Pessoa pessoa) {
         connection = ConnectionFactory.getConnection();
 
@@ -104,7 +95,7 @@ public class PessoaDAO {
             st = connection.prepareStatement("UPDATE pessoa SET nome = ?, nascimento = ?, endereco = ? WHERE id = ? ");
 
             st.setString(1, pessoa.getNome());
-            st.setDate(2,new java.sql.Date(pessoa.getDataNascimento().getTime()));
+            st.setDate(2,new java.sql.Date(pessoa.getNascimento().getTime()));
             st.setInt(3, pessoa.getEndereco().getId());
             st.setInt(4, pessoa.getId());
 
@@ -118,6 +109,7 @@ public class PessoaDAO {
         }
     }
 
+    @Override
     public boolean delete(Pessoa pessoa){
         connection = ConnectionFactory.getConnection();
         
@@ -145,6 +137,7 @@ public class PessoaDAO {
         
     }
     
+    @Override
     public List<Pessoa> list() {
         List<Pessoa> lista = new ArrayList<Pessoa>();
         connection = ConnectionFactory.getConnection();
@@ -152,24 +145,18 @@ public class PessoaDAO {
         PreparedStatement st = null;
 
         try {
-            st = connection.prepareStatement("SELECT p.id, p.nome, p.nascimento, e.id as eid, e.rua as rua, e.numero as numero, e.cidade as cidade FROM public.pessoa p, public.endereco e WHERE p.endereco=e.id");
+            st = connection.prepareStatement("SELECT id, nome, nascimento, endereco FROM public.pessoa WHERE id=?");
 
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
                 Pessoa pessoa = new Pessoa();
-
+                Endereco endereco = new Endereco();
+                
                 pessoa.setId(rs.getInt("id"));
                 pessoa.setNome(rs.getString("nome"));
-                pessoa.setDataNascimento(rs.getDate("nascimento"));
-                
-                Endereco endereco = new Endereco();
-                endereco.setId(rs.getInt("eid"));
-                endereco.setRua(rs.getString("rua"));
-                endereco.setCidade(rs.getString("cidade"));
-                endereco.setNumero("numero");
-                
-                pessoa.setEndereco(endereco);
+                pessoa.setNascimento(rs.getDate("nascimento"));
+                pessoa.setEndereco(new EnderecoDAO().search(rs.getInt("enderreco")));
                 
                 lista.add(pessoa);
             }
@@ -181,6 +168,5 @@ public class PessoaDAO {
 
         return lista;
     }
-
 
 }
