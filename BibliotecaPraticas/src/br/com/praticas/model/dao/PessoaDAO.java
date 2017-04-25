@@ -6,9 +6,10 @@
 
 package br.com.praticas.model.dao;
 
-import br.com.praticas.connection.ConnectionFactory;
+import br.com.praticas.factory.ConnectionFactory;
 import br.com.praticas.model.bean.Endereco;
 import br.com.praticas.model.bean.Pessoa;
+import br.com.praticas.factory.DAOFactory;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.PreparedStatement;
@@ -73,7 +74,7 @@ public class PessoaDAO implements IPessoaDAO {
                 pessoa.setId(id);
                 pessoa.setNome(rs.getString("nome"));
                 pessoa.setNascimento(rs.getDate("nascimento"));
-                pessoa.setEndereco(new EnderecoDAO().search(rs.getInt("endereco")));
+                pessoa.setEndereco(DAOFactory.createEnderecoDAO().search(rs.getInt("endereco")));
                 
             }
         } catch (SQLException ex) {
