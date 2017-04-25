@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IEnderecoDAO {
 
-    boolean create(Endereco endereco);
+    int create(Endereco endereco);
 
     boolean delete(Endereco endereco);
 
