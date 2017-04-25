@@ -1,6 +1,6 @@
 package br.com.praticas.model.dao;
 
-import br.com.praticas.connection.ConnectionFactory;
+import br.com.praticas.factory.ConnectionFactory;
 import br.com.praticas.model.bean.Endereco;
 import br.com.praticas.model.bean.Pessoa;
 import java.sql.Connection;
@@ -17,33 +17,42 @@ import javax.swing.JOptionPane;
  *
  * @author VAAR
  */
-public class EnderecoDAO {
+public class EnderecoDAO implements IEnderecoDAO {
     private Connection connection;
     
-    public boolean create(Endereco endereco) {
+    @Override
+    public int create(Endereco endereco) {
         
         connection = ConnectionFactory.getConnection();
         
         PreparedStatement st = null;
         
+        String sql = "INSERT INTO endereco (rua,numero,cidade) VALUES (?,?,?)";
+        
         try {
-            st = connection.prepareStatement("INSERT INTO endereco (rua,numero,cidade) VALUES (?,?,?)");
+            st = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             st.setString(1, endereco.getRua());
             st.setString(2, endereco.getNumero());
             st.setString(3, endereco.getCidade());
             
             st.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
-            return true;
+            int idEndereco = 0;
+            
+            ResultSet rs = st.getGeneratedKeys();
+            
+            if (rs.next()) {
+                idEndereco = rs.getInt(1);
+            }
+            return idEndereco;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "ERRO ao cadastrar o endereco: " + e);
-            return false;
+            return -1;
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
     }
     
+    @Override
     public Endereco search(int id) {
         Endereco endereco = null;
         connection = ConnectionFactory.getConnection();
@@ -75,6 +84,7 @@ public class EnderecoDAO {
         return endereco;
     }
     
+    @Override
     public void update(Endereco endereco) {
         connection = ConnectionFactory.getConnection();
 
@@ -98,6 +108,7 @@ public class EnderecoDAO {
         }
     }
 
+    @Override
     public boolean delete(Endereco endereco){
         connection = ConnectionFactory.getConnection();
         
@@ -125,6 +136,7 @@ public class EnderecoDAO {
         
     }
     
+    @Override
     public List<Endereco> list() {
         List<Endereco> lista = new ArrayList<Endereco>();
         connection = ConnectionFactory.getConnection();
