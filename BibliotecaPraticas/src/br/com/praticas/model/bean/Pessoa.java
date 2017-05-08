@@ -44,11 +44,11 @@ public class Pessoa {
         this.nome = nome;
     }
 
-    public Date getDataNascimento() {
+    public Date getNascimento() {
         return this.nascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setNascimento(Date dataNascimento) {
         this.nascimento = dataNascimento;
     }
 

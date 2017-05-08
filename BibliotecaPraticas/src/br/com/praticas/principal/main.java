@@ -42,7 +42,7 @@ public class main {
         p.setNome("TesteNome");
         Date date = new Date();
         date.getTime();
-        p.setDataNascimento(date);
+        p.setNascimento(date);
         p.setEndereco(e);
         
         int op;

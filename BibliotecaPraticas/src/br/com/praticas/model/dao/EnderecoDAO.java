@@ -1,8 +1,7 @@
 package br.com.praticas.model.dao;
 
-import br.com.praticas.factory.ConnectionFactory;
+import br.com.praticas.connection.ConnectionFactory;
 import br.com.praticas.model.bean.Endereco;
-import br.com.praticas.model.bean.Pessoa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

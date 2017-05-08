@@ -5,7 +5,7 @@
  */
 package br.com.praticas.model.dao;
 
-import br.com.praticas.factory.ConnectionFactory;
+import br.com.praticas.connection.ConnectionFactory;
 import br.com.praticas.model.bean.Editora;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

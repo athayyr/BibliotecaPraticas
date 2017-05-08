@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author JoséHigor
  */
-public class AutorDAO {
+public class AutorDAO implements IAutorDAO {
 
     private Connection connection;
 
