@@ -6,7 +6,6 @@
 package br.com.praticas.model.dao;
 
 import br.com.praticas.connection.ConnectionFactory;
-import br.com.praticas.model.bean.Editora;
 import br.com.praticas.model.bean.Emprestimo;
 import br.com.praticas.util.Util;
 import java.sql.Connection;
@@ -29,7 +28,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         connection = ConnectionFactory.getConnection();
         PreparedStatement st = null;
         try {
-            String sql = "INSERT INTO emprestimo(reserva,data,dataPrevista,dataEntrega) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO emprestimo(reserva,data,dataPrevista,entrega) VALUES (?,?,?,?)";
             st = connection.prepareStatement(sql);
 
             st.setBoolean(1, emprestimo.getReserva());
@@ -51,7 +50,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         connection = ConnectionFactory.getConnection();
         PreparedStatement st = null;
         try {
-            String sql = "UPDATE emprestimo SET reserva=?, data=? ,dataPrevista=? ,dataEntrega=? WHERE id=?;";
+            String sql = "UPDATE emprestimo SET reserva=?, data=? ,dataPrevista=? ,entrega=? WHERE id=?;";
             st = connection.prepareStatement(sql);
 
             
@@ -80,7 +79,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT id,reserva,data,dataPrevista,Entrega FROM Emprestimo;";
+            String sql = "SELECT id,reserva,data,dataPrevista,entrega FROM Emprestimo;";
             st = connection.prepareStatement(sql);
 
             rs = st.executeQuery();
@@ -92,7 +91,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
                 boolean reserva = rs.getBoolean("reserva");
                 Date data = rs.getDate("data");
                 int dataP = rs.getInt("dataPrevista");
-                Date entrega = rs.getDate("Entrega");
+                Date entrega = rs.getDate("entrega");
 
                 emprestimo.setId(id);
                 emprestimo.setReserva(reserva);
@@ -121,7 +120,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT id,reserva,data,dataPrevista,Entrega FROM emprestimo WHERE id=?;";
+            String sql = "SELECT id,reserva,data,dataPrevista,entrega FROM emprestimo WHERE id=?;";
             st = connection.prepareStatement(sql);
 
             st.setInt(1, id);
@@ -134,7 +133,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
                 boolean reserva = rs.getBoolean("reserva");
                 Date data = rs.getDate("data");
                 int dataP = rs.getInt("dataPrevista");
-                Date entrega = rs.getDate("Entrega");
+                Date entrega = rs.getDate("entrega");
                 
                 emprestimo.setId(id);
                 emprestimo.setReserva(reserva);
