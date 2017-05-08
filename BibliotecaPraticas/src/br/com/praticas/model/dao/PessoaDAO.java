@@ -129,7 +129,7 @@ public class PessoaDAO implements IPessoaDAO {
 
     @Override
     public List<Pessoa> list() {
-        List<Pessoa> lista = new ArrayList<Pessoa>();
+        List<Pessoa> lista = new ArrayList<>();
         connection = ConnectionFactory.getConnection();
 
         PreparedStatement st = null;

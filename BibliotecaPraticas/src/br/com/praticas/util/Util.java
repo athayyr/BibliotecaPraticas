@@ -33,5 +33,9 @@ public class Util {
     public static java.sql.Date stringToDateSql(String data){ 
         return new java.sql.Date(stringParaDate(data).getTime());
     }
-
+    
+    public static java.sql.Date dateParaSql(Date date){
+        return new java.sql.Date(date.getTime());
+    }
+    
 }
