@@ -6,6 +6,7 @@
 package br.com.praticas.model.dao;
 
 import br.com.praticas.factory.ConnectionFactory;
+import br.com.praticas.factory.DAOFactory;
 import br.com.praticas.interfaces.IAlunoDAO;
 import br.com.praticas.model.bean.Aluno;
 import br.com.praticas.model.bean.Pessoa;
@@ -13,6 +14,8 @@ import br.com.praticas.util.Properties;
 import br.com.praticas.util.Util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,10 +48,10 @@ public class AlunoDAO implements IAlunoDAO{
             st.executeUpdate();
 
             return true;
-            }else{
+            }
+            else{
                 throw new Exception(Properties.getStringErroValue(Properties.ERRO_INSERIR_PESSOA));
             }
-            
         } catch (Exception ex) {
             throw new Exception(Properties.getStringErroValue(Properties.ERRO_INSERIR_ALUNO));
         } finally {
@@ -58,22 +61,123 @@ public class AlunoDAO implements IAlunoDAO{
 
     @Override
     public boolean delete(Aluno aluno) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connection = ConnectionFactory.getConnection();
+
+        PreparedStatement st = null;
+
+        try {
+            Pessoa pessoa = new Pessoa();
+            pessoa.setId(aluno.getId());
+            PessoaDAO pessoaDao = new PessoaDAO();
+            
+            if(pessoaDao.delete(pessoa)){
+                st = connection.prepareStatement("DELETE FROM aluno WHERE id = ?");
+                st.setInt(1, aluno.getId());
+                st.executeUpdate();
+                return true;
+            }
+            else{
+                throw new Exception(Properties.getStringErroValue(Properties.ERRO_DELETAR_PESSOA));
+            }
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_DELETAR_ALUNO));
+        } finally {
+            ConnectionFactory.closeConnection(connection, st);
+        }
     }
 
     @Override
     public List<Aluno> list() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Aluno> lista = new ArrayList<>();
+        connection = ConnectionFactory.getConnection();
+        PessoaDAO pessoaDao = new PessoaDAO();
+        PreparedStatement st = null;
+
+        try {
+            st = connection.prepareStatement("SELECT id, matricula, curso FROM aluno");
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Aluno aluno = new Aluno();
+                aluno.setId(rs.getInt("id"));
+                Pessoa pessoa = pessoaDao.search(aluno.getId());
+                aluno.setEndereco(pessoa.getEndereco());
+                aluno.setNome(pessoa.getNome());
+                aluno.setNascimento(pessoa.getNascimento());
+                aluno.setMatricula(rs.getInt("matricula"));
+                aluno.setCurso(rs.getString("curso"));
+                lista.add(aluno);
+            }
+            return lista;
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_LISTAR_ALUNO));
+        } finally {
+            ConnectionFactory.closeConnection(connection, st);
+        }
     }
 
     @Override
     public Aluno search(int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Aluno aluno = null;
+        connection = ConnectionFactory.getConnection();
+        PessoaDAO pessoaDAO = new PessoaDAO();
+        PreparedStatement st = null;
+
+        try {
+            st = connection.prepareStatement("SELECT id, matricula, curso FROM aluno WHERE id=?");
+
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
+            
+            if (rs.next()) {
+                Pessoa pessoa = pessoaDAO.search(id);
+                aluno = new Aluno();
+                aluno.setId(id);
+                aluno.setNome(pessoa.getNome());
+                aluno.setEndereco(pessoa.getEndereco());
+                aluno.setNascimento(pessoa.getNascimento());
+                aluno.setMatricula(rs.getInt("matricula"));
+                aluno.setCurso(rs.getString("curso"));
+            }
+            return aluno;
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_BUSCAR_PESSOA));
+        } finally {
+            ConnectionFactory.closeConnection(connection, st);
+        }
     }
 
     @Override
     public void update(Aluno aluno) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connection = ConnectionFactory.getConnection();
+
+        PreparedStatement st = null;
+        
+        try {
+            st = connection.prepareStatement("UPDATE pessoa SET nome = ?, nascimento = ?, endereco = ? WHERE id = ? ");
+
+            st.setString(1, aluno.getNome());
+            st.setDate(2, new java.sql.Date(aluno.getNascimento().getTime()));
+            st.setInt(3, aluno.getEndereco().getId());
+            st.setInt(4, aluno.getId());
+
+            st.executeUpdate();
+            
+            st = connection.prepareStatement("UPDATE aluno SET matricula = ?, curso = ? WHERE id = ?");
+            
+            st.setInt(1, aluno.getMatricula());
+            st.setString(2, aluno.getCurso());
+            st.setInt(3, aluno.getId());
+            
+            st.executeUpdate();
+            
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_EDITAR_PESSOA));
+        } finally {
+            ConnectionFactory.closeConnection(connection, st);
+        }
     }
     
 }
