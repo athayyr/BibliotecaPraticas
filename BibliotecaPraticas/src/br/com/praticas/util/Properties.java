@@ -66,6 +66,18 @@ public class Properties {
     public static final String ERRO_BUSCAR_PESSOA = "erro_buscar_pessoa";
     public static final String ERRO_LISTAR_PESSOA = "erro_listar_pessoa";
     
+    public static final String ERRO_INSERIR_ALUNO = "erro_inserir_aluno";
+    public static final String ERRO_EDITAR_ALUNO = "erro_editar_aluno";
+    public static final String ERRO_DELETAR_ALUNO = "erro_deletar_aluno";
+    public static final String ERRO_BUSCAR_ALUNO = "erro_buscar_aluno";
+    public static final String ERRO_LISTAR_ALUNO = "erro_listar_aluno";
+    
+    public static final String ERRO_INSERIR_FUNCIONARIO = "erro_inserir_funcionario";
+    public static final String ERRO_EDITAR_FUNCIONARIO = "erro_editar_funcionario";
+    public static final String ERRO_DELETAR_FUNCIONARIO = "erro_deletar_funcionario";
+    public static final String ERRO_BUSCAR_FUNCIONARIO = "erro_buscar_funcionario";
+    public static final String ERRO_LISTAR_FUNCIONARIO = "erro_listar_funcionario";
+    
     public static String getStringErroValue(String chave){
         return RESOURCE_STRINGS_ERRO.getString(chave);
     }
