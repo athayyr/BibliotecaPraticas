@@ -27,12 +27,6 @@ public class AutorDAOTest {
         
         AutorDAO autorDAO = new AutorDAO();
         
-        if(autorDAO.create(autor)){
-            System.out.println("Sucesso!");
-        }else{
-            fail("ERRO");
-        }
-        
         autor = autorDAO.search(4);
         
         autor.setNome("Teste update");

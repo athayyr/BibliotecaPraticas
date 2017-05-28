@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package br.com.praticas.connection;
+package br.com.praticas.factory;
 
+import br.com.praticas.util.Properties;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,17 +20,17 @@ import java.util.logging.Logger;
  * @author VAAR
  */
 public class ConnectionFactory {
-
-    private static final String DRIVER = "org.postgresql.Driver";
-    private static final String URL = "jdbc:postgresql://localhost:5432/praticas.biblioteca";
-    private static final String USER = "postgres";
-    private static final String PASS = "admin";
-
     public static Connection getConnection() {
         try {
-            Class.forName(DRIVER);
+            Class.forName(Properties.getConfiguracaoValue(Properties.JDBC_DRIVER));
 
-            return DriverManager.getConnection(URL, USER, PASS);
+            return DriverManager.getConnection(
+                    //url
+                    Properties.getConfiguracaoValue(Properties.JDBC_URL), 
+                    //user
+                    Properties.getConfiguracaoValue(Properties.JDBC_USER),
+                    //pass
+                    Properties.getConfiguracaoValue(Properties.JDBC_PASS));
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException("Erro de conexão com o Banco de dados", e);
         }

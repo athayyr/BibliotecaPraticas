@@ -24,12 +24,12 @@ public class PessoaDAOTest {
 
     @Test
     @Ignore
-    public void testSomeMethod() {
+    public void testSomeMethod() throws Exception {
         Endereco endereco = new Endereco();
         endereco.setId(11);
         
         
-        Pessoa pessoa = new Pessoa("teste", Util.stringParaDate("30/05/1997"), endereco);
+        Pessoa pessoa = new Pessoa("teste", Util.stringToDate("30/05/1997"), endereco);
         
         PessoaDAO pessoaDAO = new PessoaDAO();
         
@@ -48,10 +48,10 @@ public class PessoaDAOTest {
     
     @Test
     @Ignore
-    public void testSomeMethodListar() {
+    public void testSomeMethodListar() throws Exception {
         Endereco endereco = new Endereco();       
         
-        Pessoa pessoa = new Pessoa("teste", Util.stringParaDate("30/05/1997"), endereco);
+        Pessoa pessoa = new Pessoa("teste", Util.stringToDate("30/05/1997"), endereco);
         
         PessoaDAO pessoaDAO = new PessoaDAO();
         
@@ -61,10 +61,10 @@ public class PessoaDAOTest {
     }
     
     @Test
-    public void testSomeMethodExcluir() {
+    public void testSomeMethodExcluir() throws Exception {
         Endereco endereco = new Endereco();       
         
-        Pessoa pessoa = new Pessoa("teste", Util.stringParaDate("30/05/1997"), endereco);
+        Pessoa pessoa = new Pessoa("teste", Util.stringToDate("30/05/1997"), endereco);
         
         PessoaDAO pessoaDAO = new PessoaDAO();
         

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.praticas.model.dao;
+package br.com.praticas.interfaces;
 
 import br.com.praticas.model.bean.Autor;
 import java.util.List;
@@ -14,14 +14,14 @@ import java.util.List;
  */
 public interface IAutorDAO {
 
-    boolean create(Autor a);
+    int create(Autor a) throws Exception;
 
-    boolean delete(Autor a);
+    boolean delete(Autor a) throws Exception;
 
-    List<Autor> list();
+    List<Autor> list() throws Exception;
 
-    Autor search(int id);
+    Autor search(int id) throws Exception;
 
-    boolean update(Autor a);
+    boolean update(Autor a) throws Exception;
     
 }

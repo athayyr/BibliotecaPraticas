@@ -5,15 +5,16 @@
  */
 package br.com.praticas.model.dao;
 
-import br.com.praticas.connection.ConnectionFactory;
+import br.com.praticas.interfaces.IAutorDAO;
+import br.com.praticas.factory.ConnectionFactory;
 import br.com.praticas.model.bean.Autor;
+import br.com.praticas.util.Properties;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,21 +24,27 @@ public class AutorDAO implements IAutorDAO {
 
     private Connection connection;
 
-    public boolean create(Autor a) {
+    public int create(Autor a) {
         connection = ConnectionFactory.getConnection();
         PreparedStatement st = null;
         try {
             String sql = "INSERT INTO autor(nome) VALUES (?)";
-            st = connection.prepareStatement(sql);
+            st = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
             st.setString(1, a.getNome());
             st.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
-            return true;
+            int idAutor = 0;
+            
+            ResultSet rs = st.getGeneratedKeys();
+            
+            if (rs.next()) {
+                idAutor = rs.getInt(1);
+            }
+            return idAutor;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar!");
-            return false;
+            System.out.println(Properties.getStringErroValue(Properties.ERRO_INSERIR_AUTOR));
+            return -1;
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
@@ -55,10 +62,9 @@ public class AutorDAO implements IAutorDAO {
 
             st.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar!");
+            System.out.println(Properties.getStringErroValue(Properties.ERRO_EDITAR_AUTOR));
             return false;
         } finally {
             ConnectionFactory.closeConnection(connection, st);
@@ -91,7 +97,7 @@ public class AutorDAO implements IAutorDAO {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Listar Autores!");
+            System.out.println(Properties.getStringErroValue(Properties.ERRO_LISTAR_AUTOR));
         } finally {
             ConnectionFactory.closeConnection(connection, st, rs);
         }
@@ -124,7 +130,7 @@ public class AutorDAO implements IAutorDAO {
             }
             return a;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao buscar autor");
+            System.out.println(Properties.getStringErroValue(Properties.ERRO_BUSCAR_AUTOR));
             return null;
         } finally {
             ConnectionFactory.closeConnection(connection, st, rs);
@@ -145,12 +151,12 @@ public class AutorDAO implements IAutorDAO {
 
             st.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Autor removido");
+            System.out.println(Properties.getStringErroValue(Properties.SUCESSO_DELETAR_AUTOR));
 
             return true;
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao remover Autor!");
+            System.out.println(Properties.getStringErroValue(Properties.ERRO_DELETAR_AUTOR));
             return false;
         } finally {
             ConnectionFactory.closeConnection(connection, st);

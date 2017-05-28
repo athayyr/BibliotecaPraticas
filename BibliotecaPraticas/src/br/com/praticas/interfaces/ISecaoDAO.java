@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.praticas.model.dao;
+package br.com.praticas.interfaces;
 
 import br.com.praticas.model.bean.Secao;
 import java.util.List;
@@ -14,14 +14,14 @@ import java.util.List;
  */
 public interface ISecaoDAO {
 
-    boolean create(Secao secao);
+    int create(Secao secao) throws Exception;
 
-    boolean delete(Secao secao);
+    boolean delete(Secao secao) throws Exception;
 
-    List<Secao> list();
+    List<Secao> list() throws Exception;
 
-    Secao search(int id);
+    Secao search(int id) throws Exception;
 
-    boolean update(Secao secao);
+    boolean update(Secao secao) throws Exception;
     
 }

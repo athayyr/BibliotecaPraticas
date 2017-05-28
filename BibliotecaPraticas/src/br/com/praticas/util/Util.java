@@ -5,12 +5,7 @@
  */
 package br.com.praticas.util;
 
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -18,24 +13,32 @@ import java.util.logging.Logger;
  */
 public class Util {
 
-    public static Date stringParaDate(String data) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
+    //Conversoes para datas
+    private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
+    public static String dateToString(java.util.Date data) {
         try {
-            Date date = sdf.parse(data);
-            return date;
-        } catch (ParseException ex) {
-            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+            return formatter.format(data);
+        } catch (Exception e) {
             return null;
         }
     }
-    
-    public static java.sql.Date stringToDateSql(String data){ 
-        return new java.sql.Date(stringParaDate(data).getTime());
+
+    public static java.util.Date stringToDate(String dataStr) {
+        try {
+            return formatter.parse(dataStr);
+        } catch (Exception e) {
+            return null;
+        }
     }
-    
-    public static java.sql.Date dateParaSql(Date date){
-        return new java.sql.Date(date.getTime());
+
+    public static java.util.Date sqlParaDate(java.sql.Date data) {
+        return new java.util.Date(data.getTime());
     }
-    
+
+    public static java.sql.Date dateParaSql(java.util.Date data) {
+        return new java.sql.Date(data.getTime());
+    }
+
 }

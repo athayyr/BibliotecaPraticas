@@ -5,17 +5,17 @@
  */
 package br.com.praticas.model.dao;
 
-import br.com.praticas.connection.ConnectionFactory;
+import br.com.praticas.interfaces.IPessoaDAO;
+import br.com.praticas.factory.ConnectionFactory;
 import br.com.praticas.model.bean.Pessoa;
 import br.com.praticas.factory.DAOFactory;
+import br.com.praticas.util.Properties;
+import br.com.praticas.util.Util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -27,7 +27,7 @@ public class PessoaDAO implements IPessoaDAO {
     private Connection connection;
 
     @Override
-    public boolean create(Pessoa pessoa) {
+    public boolean create(Pessoa pessoa) throws Exception {
         connection = ConnectionFactory.getConnection();
 
         PreparedStatement st = null;
@@ -35,21 +35,21 @@ public class PessoaDAO implements IPessoaDAO {
         try {
             st = connection.prepareStatement("INSERT INTO pessoa (nome,nascimento,endereco) VALUES(?,?,?)");
             st.setString(1, pessoa.getNome());
-            st.setDate(2, new java.sql.Date(pessoa.getNascimento().getTime()));
+            st.setDate(2, Util.dateParaSql(pessoa.getNascimento()));
             st.setInt(3, pessoa.getEndereco().getId());
 
             st.executeUpdate();
 
             return true;
-        } catch (SQLException ex) {
-            return false;
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_INSERIR_PESSOA));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
     }
 
     @Override
-    public Pessoa search(int id) {
+    public Pessoa search(int id) throws Exception {
         Pessoa pessoa = null;
         connection = ConnectionFactory.getConnection();
 
@@ -72,8 +72,8 @@ public class PessoaDAO implements IPessoaDAO {
 
             }
             return pessoa;
-        } catch (SQLException ex) {
-            return null;
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_BUSCAR_PESSOA));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
@@ -81,7 +81,7 @@ public class PessoaDAO implements IPessoaDAO {
     }
 
     @Override
-    public void update(Pessoa pessoa) {
+    public void update(Pessoa pessoa) throws Exception {
         connection = ConnectionFactory.getConnection();
 
         PreparedStatement st = null;
@@ -96,15 +96,15 @@ public class PessoaDAO implements IPessoaDAO {
 
             st.executeUpdate();
             
-        } catch (SQLException ex) {
-            //
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_EDITAR_PESSOA));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
     }
 
     @Override
-    public boolean delete(Pessoa pessoa) {
+    public boolean delete(Pessoa pessoa) throws Exception{
         connection = ConnectionFactory.getConnection();
 
         PreparedStatement st = null;
@@ -118,9 +118,8 @@ public class PessoaDAO implements IPessoaDAO {
 
 
             return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(PessoaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_DELETAR_PESSOA));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
@@ -128,7 +127,7 @@ public class PessoaDAO implements IPessoaDAO {
     }
 
     @Override
-    public List<Pessoa> list() {
+    public List<Pessoa> list() throws Exception {
         List<Pessoa> lista = new ArrayList<>();
         connection = ConnectionFactory.getConnection();
 
@@ -150,8 +149,8 @@ public class PessoaDAO implements IPessoaDAO {
                 lista.add(pessoa);
             }
             return lista;
-        } catch (SQLException ex) {
-            return null;
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_LISTAR_PESSOA));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.praticas.model.dao;
+package br.com.praticas.interfaces;
 
 import br.com.praticas.model.bean.Pessoa;
 import java.util.List;
@@ -14,14 +14,14 @@ import java.util.List;
  */
 public interface IPessoaDAO {
 
-    boolean create(Pessoa pessoa);
+    boolean create(Pessoa pessoa) throws Exception;
 
-    boolean delete(Pessoa pessoa);
+    boolean delete(Pessoa pessoa) throws Exception;
 
-    List<Pessoa> list();
+    List<Pessoa> list() throws Exception;
 
-    Pessoa search(int id);
+    Pessoa search(int id) throws Exception;
 
-    void update(Pessoa pessoa);
+    void update(Pessoa pessoa) throws Exception;
     
 }

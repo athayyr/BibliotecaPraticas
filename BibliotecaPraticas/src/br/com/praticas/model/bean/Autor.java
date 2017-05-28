@@ -10,8 +10,8 @@ package br.com.praticas.model.bean;
  * @author JoséHigor
  */
 public class Autor {
-    int id;
-    String nome;
+    private int id;
+    private String nome;
 
     public int getId() {
         return id;

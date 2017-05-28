@@ -1,16 +1,16 @@
 package br.com.praticas.model.dao;
 
-import br.com.praticas.connection.ConnectionFactory;
+import br.com.praticas.interfaces.IEnderecoDAO;
+import br.com.praticas.factory.ConnectionFactory;
 import br.com.praticas.model.bean.Endereco;
+import br.com.praticas.util.Properties;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,7 +20,7 @@ public class EnderecoDAO implements IEnderecoDAO {
     private Connection connection;
     
     @Override
-    public int create(Endereco endereco) {
+    public int create(Endereco endereco) throws Exception {
         
         connection = ConnectionFactory.getConnection();
         
@@ -44,15 +44,16 @@ public class EnderecoDAO implements IEnderecoDAO {
                 idEndereco = rs.getInt(1);
             }
             return idEndereco;
-        } catch (SQLException e) {
-            return -1;
+        } catch (Exception e) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_INSERIR_ENDERECO));
+            //return -1;
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
     }
     
     @Override
-    public Endereco search(int id) {
+    public Endereco search(int id) throws Exception{
         Endereco endereco = null;
         connection = ConnectionFactory.getConnection();
 
@@ -74,8 +75,8 @@ public class EnderecoDAO implements IEnderecoDAO {
                 endereco.setNumero("numero");
                 
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "ERRO ao pegar pessoa no banco!");
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_BUSCAR_ENDERECO));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
@@ -84,7 +85,7 @@ public class EnderecoDAO implements IEnderecoDAO {
     }
     
     @Override
-    public void update(Endereco endereco) {
+    public void update(Endereco endereco) throws Exception{
         connection = ConnectionFactory.getConnection();
 
         PreparedStatement st = null;
@@ -99,16 +100,16 @@ public class EnderecoDAO implements IEnderecoDAO {
 
             st.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Atualizado com Sucesso!");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "ERRO ao atualizar!");
+            System.out.println(Properties.getStringErroValue(Properties.SUCESSO_EDITAR_ENDERECO));
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_EDITAR_ENDERECO));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
     }
 
     @Override
-    public boolean delete(Endereco endereco){
+    public boolean delete(Endereco endereco) throws Exception{
         connection = ConnectionFactory.getConnection();
         
         PreparedStatement st = null;
@@ -120,15 +121,15 @@ public class EnderecoDAO implements IEnderecoDAO {
             
             st.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "Excluido com Sucesso!");
+            System.out.println(Properties.getStringErroValue(Properties.SUCESSO_DELETAR_ENDERECO));
             
             return true;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(PessoaDAO.class.getName()).log(Level.SEVERE, null, ex);
             
-            JOptionPane.showMessageDialog(null, "ERRO ao Excluir!");
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_DELETAR_ENDERECO));
             
-            return false;
+            //return false;
         }finally{
             ConnectionFactory.closeConnection(connection, st);
         }
@@ -136,8 +137,8 @@ public class EnderecoDAO implements IEnderecoDAO {
     }
     
     @Override
-    public List<Endereco> list() {
-        List<Endereco> lista = new ArrayList<Endereco>();
+    public List<Endereco> list() throws Exception{
+        List<Endereco> lista = new ArrayList<>();
         connection = ConnectionFactory.getConnection();
 
         PreparedStatement st = null;
@@ -157,8 +158,8 @@ public class EnderecoDAO implements IEnderecoDAO {
                 
                 lista.add(endereco);
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "ERRO ao listar!");
+        } catch (Exception ex) {
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_LISTAR_ENDERECO));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }

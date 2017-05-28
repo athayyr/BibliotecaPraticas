@@ -5,7 +5,8 @@
  */
 package br.com.praticas.model.dao;
 
-import br.com.praticas.connection.ConnectionFactory;
+import br.com.praticas.interfaces.IEditoraDAO;
+import br.com.praticas.factory.ConnectionFactory;
 import br.com.praticas.model.bean.Editora;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,19 +22,27 @@ public class EditoraDAO implements IEditoraDAO {
     private Connection connection;
 
     @Override
-    public boolean create(Editora editora) {
+    public int create(Editora editora) {
         connection = ConnectionFactory.getConnection();
         PreparedStatement st = null;
+        
+        String sql = "INSERT INTO editora(nome) VALUES (?)";
+        
         try {
-            String sql = "INSERT INTO editora(nome) VALUES (?)";
-            st = connection.prepareStatement(sql);
-
+            st = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             st.setString(1, editora.getNome());
             st.executeUpdate();
 
-            return true;
+            int idEditora = 0;
+            
+            ResultSet rs = st.getGeneratedKeys();
+            
+            if (rs.next()) {
+                idEditora = rs.getInt(1);
+            }
+            return idEditora;
         } catch (SQLException ex) {
-            return false;
+            return -1;
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
@@ -62,7 +71,7 @@ public class EditoraDAO implements IEditoraDAO {
 
     @Override
     public List<Editora> list() {
-        List<Editora> lista = new ArrayList<Editora>();
+        List<Editora> lista = new ArrayList<>();
 
         connection = ConnectionFactory.getConnection();
         PreparedStatement st = null;

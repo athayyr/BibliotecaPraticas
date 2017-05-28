@@ -24,12 +24,6 @@ public class EnderecoDAOTest {
         Endereco endereco = new Endereco("Maria", "251", "Coremas");     
         
         EnderecoDAO dao = new EnderecoDAO();
-        
-        if(dao.create(endereco)){
-            System.out.println("Sucesso");
-        }else{
-            fail("ERRO");
-        }
     }
     
 }

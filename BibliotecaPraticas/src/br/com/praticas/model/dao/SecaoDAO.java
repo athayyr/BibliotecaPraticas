@@ -5,7 +5,8 @@
  */
 package br.com.praticas.model.dao;
 
-import br.com.praticas.connection.ConnectionFactory;
+import br.com.praticas.interfaces.ISecaoDAO;
+import br.com.praticas.factory.ConnectionFactory;
 import br.com.praticas.model.bean.Secao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,19 +24,25 @@ public class SecaoDAO implements ISecaoDAO {
     private Connection connection;
 
     @Override
-    public boolean create(Secao secao) {
+    public int create(Secao secao) {
         connection = ConnectionFactory.getConnection();
         PreparedStatement st = null;
+        String sql = "INSERT INTO secao(descricao) VALUES (?)";
         try {
-            String sql = "INSERT INTO editora(nome) VALUES (?)";
-            st = connection.prepareStatement(sql);
-
+            st = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             st.setString(1, secao.getDescricao());
             st.executeUpdate();
 
-            return true;
+            int idSecao = 0;
+            
+            ResultSet rs = st.getGeneratedKeys();
+            
+            if (rs.next()) {
+                idSecao = rs.getInt(1);
+            }
+            return idSecao;
         } catch (SQLException ex) {
-            return false;
+            return -1;
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
@@ -46,7 +53,7 @@ public class SecaoDAO implements ISecaoDAO {
         connection = ConnectionFactory.getConnection();
         PreparedStatement st = null;
         try {
-            String sql = "UPDATE editora SET nome=? WHERE id=?;";
+            String sql = "UPDATE secao SET descricao=? WHERE id=?;";
             st = connection.prepareStatement(sql);
 
             st.setString(1, secao.getDescricao());
@@ -136,7 +143,7 @@ public class SecaoDAO implements ISecaoDAO {
         PreparedStatement st = null;
 
         try {
-            String sql = "DELETE FROM editora WHERE id=?;";
+            String sql = "DELETE FROM secao WHERE id=?;";
 
             st = connection.prepareStatement(sql);
 
