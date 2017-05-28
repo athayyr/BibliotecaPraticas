@@ -37,9 +37,8 @@ public class AlunoDAO implements IAlunoDAO{
             pessoa.setNome(aluno.getNome());
             pessoa.setEndereco(aluno.getEndereco());
             pessoa.setNascimento(aluno.getNascimento());
-            PessoaDAO pessoaDAO = new PessoaDAO();
             
-            if(pessoaDAO.create(pessoa)){
+            if(DAOFactory.createPessoaDAO().create(pessoa)){
             st = connection.prepareStatement("INSERT INTO aluno (id, matricula, curso) VALUES(?,?,?)");
             st.setInt(1, aluno.getId());
             st.setInt(2, aluno.getMatricula());
@@ -68,9 +67,8 @@ public class AlunoDAO implements IAlunoDAO{
         try {
             Pessoa pessoa = new Pessoa();
             pessoa.setId(aluno.getId());
-            PessoaDAO pessoaDao = new PessoaDAO();
             
-            if(pessoaDao.delete(pessoa)){
+            if(DAOFactory.createPessoaDAO().delete(pessoa)){
                 st = connection.prepareStatement("DELETE FROM aluno WHERE id = ?");
                 st.setInt(1, aluno.getId());
                 st.executeUpdate();
@@ -101,7 +99,7 @@ public class AlunoDAO implements IAlunoDAO{
             while (rs.next()) {
                 Aluno aluno = new Aluno();
                 aluno.setId(rs.getInt("id"));
-                Pessoa pessoa = pessoaDao.search(aluno.getId());
+                Pessoa pessoa = DAOFactory.createPessoaDAO().search(aluno.getId());
                 aluno.setEndereco(pessoa.getEndereco());
                 aluno.setNome(pessoa.getNome());
                 aluno.setNascimento(pessoa.getNascimento());
@@ -121,7 +119,6 @@ public class AlunoDAO implements IAlunoDAO{
     public Aluno search(int id) throws Exception {
         Aluno aluno = null;
         connection = ConnectionFactory.getConnection();
-        PessoaDAO pessoaDAO = new PessoaDAO();
         PreparedStatement st = null;
 
         try {
@@ -132,7 +129,7 @@ public class AlunoDAO implements IAlunoDAO{
             ResultSet rs = st.executeQuery();
             
             if (rs.next()) {
-                Pessoa pessoa = pessoaDAO.search(id);
+                Pessoa pessoa = DAOFactory.createPessoaDAO().search(id);
                 aluno = new Aluno();
                 aluno.setId(id);
                 aluno.setNome(pessoa.getNome());
