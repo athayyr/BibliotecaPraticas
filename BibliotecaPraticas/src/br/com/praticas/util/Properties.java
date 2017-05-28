@@ -120,6 +120,20 @@ public class Properties {
     public static final String SUCESSO_BUSCAR_PESSOA = "sucesso_buscar_pessoa";
     public static final String SUCESSO_LISTAR_PESSOA = "sucesso_listar_pessoa";
     
+    public static final String SUCESSO_INSERIR_ALUNO = "sucesso_inserir_aluno";
+    public static final String SUCESSO_EDITAR_ALUNO = "sucesso_editar_aluno";
+    public static final String SUCESSO_DELETAR_ALUNO = "sucesso_deletar_aluno";
+    public static final String SUCESSO_BUSCAR_ALUNO = "sucesso_buscar_aluno";
+    public static final String SUCESSO_LISTAR_ALUNO = "sucesso_listar_aluno";
+    
+    public static final String SUCESSO_INSERIR_FUNCIONARIO = "sucesso_inserir_funcionario";
+    public static final String SUCESSO_EDITAR_FUNCIONARIO = "sucesso_editar_funcionario";
+    public static final String SUCESSO_DELETAR_FUNCIONARIO = "sucesso_deletar_funcionario";
+    public static final String SUCESSO_BUSCAR_FUNCIONARIO = "sucesso_buscar_funcionario";
+    public static final String SUCESSO_LISTAR_FUNCIONARIO = "sucesso_listar_funcionario";
+    
+    
+    
     public static String getStringSucessoValue(String chave){
         return RESOURCE_STRINGS_SUCESSO.getString(chave);
     }
