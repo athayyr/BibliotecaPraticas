@@ -88,7 +88,6 @@ public class AlunoDAO implements IAlunoDAO{
     public List<Aluno> list() throws Exception {
         List<Aluno> lista = new ArrayList<>();
         connection = ConnectionFactory.getConnection();
-        PessoaDAO pessoaDao = new PessoaDAO();
         PreparedStatement st = null;
 
         try {
