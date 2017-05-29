@@ -5,6 +5,7 @@
  */
 package br.com.praticas.factory;
 
+import br.com.praticas.interfaces.IAlunoDAO;
 import br.com.praticas.model.dao.AutorDAO;
 import br.com.praticas.model.dao.EditoraDAO;
 import br.com.praticas.model.dao.EmprestimoDAO;
@@ -19,6 +20,7 @@ import br.com.praticas.interfaces.ISecaoDAO;
 import br.com.praticas.model.dao.LivroDAO;
 import br.com.praticas.model.dao.PessoaDAO;
 import br.com.praticas.model.dao.SecaoDAO;
+import br.com.praticas.model.dao.AlunoDAO;
 
 /**
  *
@@ -53,4 +55,10 @@ public class DAOFactory {
     public static ILivroDAO createLivroDAO(){
         return new LivroDAO();
     }
+    
+    public static IAlunoDAO createAlunoDAO(){
+        return new AlunoDAO();
+    }
+    
+    
 }
