@@ -140,7 +140,7 @@ public class AlunoDAO implements IAlunoDAO{
             }
             return aluno;
         } catch (Exception ex) {
-            throw new Exception(Properties.getStringErroValue(Properties.ERRO_BUSCAR_PESSOA));
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_BUSCAR_ALUNO));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
@@ -171,7 +171,7 @@ public class AlunoDAO implements IAlunoDAO{
             st.executeUpdate();
             
         } catch (Exception ex) {
-            throw new Exception(Properties.getStringErroValue(Properties.ERRO_EDITAR_PESSOA));
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_EDITAR_ALUNO));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
         }
