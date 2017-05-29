@@ -14,6 +14,7 @@ import br.com.praticas.interfaces.IAutorDAO;
 import br.com.praticas.interfaces.IEditoraDAO;
 import br.com.praticas.interfaces.IEmprestimoDAO;
 import br.com.praticas.interfaces.IEnderecoDAO;
+import br.com.praticas.interfaces.IFuncionarioDao;
 import br.com.praticas.interfaces.ILivroDAO;
 import br.com.praticas.interfaces.IPessoaDAO;
 import br.com.praticas.interfaces.ISecaoDAO;
@@ -21,6 +22,7 @@ import br.com.praticas.model.dao.LivroDAO;
 import br.com.praticas.model.dao.PessoaDAO;
 import br.com.praticas.model.dao.SecaoDAO;
 import br.com.praticas.model.dao.AlunoDAO;
+import br.com.praticas.model.dao.FuncionarioDAO;
 
 /**
  *
@@ -60,5 +62,7 @@ public class DAOFactory {
         return new AlunoDAO();
     }
     
-    
+    public static IFuncionarioDao createFuncionarioDao(){
+        return new FuncionarioDAO();
+    }
 }
