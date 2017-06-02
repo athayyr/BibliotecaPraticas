@@ -139,7 +139,6 @@ public class main {
                     }
                     
                     Aluno aluno = new Aluno();
-                    a
                 }
                 
                 case 2:{
