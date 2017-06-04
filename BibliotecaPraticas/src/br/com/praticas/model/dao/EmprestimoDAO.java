@@ -5,6 +5,8 @@
  */
 package br.com.praticas.model.dao;
 
+import br.com.praticas.facade.BibliotecaFacadeLivro;
+import br.com.praticas.facade.BibliotecaFacadePessoa;
 import br.com.praticas.interfaces.IEmprestimoDAO;
 import br.com.praticas.factory.ConnectionFactory;
 import br.com.praticas.model.bean.Emprestimo;
@@ -23,19 +25,22 @@ import java.util.List;
  */
 public class EmprestimoDAO implements IEmprestimoDAO {
     private Connection connection;
-
+    private BibliotecaFacadePessoa facadePessoa;
+    private BibliotecaFacadeLivro facadeLivro;
     @Override
     public boolean create(Emprestimo emprestimo) {
         connection = ConnectionFactory.getConnection();
         PreparedStatement st = null;
         try {
-            String sql = "INSERT INTO emprestimo(reserva,data,dataPrevista,entrega) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO emprestimo(reserva,data,dataPrevista,entrega, idaluno, idlivro) VALUES (?,?,?,?,?,?)";
             st = connection.prepareStatement(sql);
 
             st.setBoolean(1, emprestimo.getReserva());
             st.setDate(2, Util.dateParaSql(emprestimo.getData()));            
             st.setInt(3, emprestimo.getDataPrevista());
             st.setDate(4, Util.dateParaSql(emprestimo.getEntrega()));
+            st.setInt(5, emprestimo.getAluno().getId());
+            st.setInt(6, emprestimo.getLivro().getId());
             st.executeUpdate();
 
             return true;
@@ -51,7 +56,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         connection = ConnectionFactory.getConnection();
         PreparedStatement st = null;
         try {
-            String sql = "UPDATE emprestimo SET reserva=?, data=? ,dataPrevista=? ,entrega=? WHERE id=?;";
+            String sql = "UPDATE emprestimo SET reserva=?, data=? ,dataPrevista=? ,entrega=?, idaluno = ?, idlivro = ? WHERE id=?;";
             st = connection.prepareStatement(sql);
 
             
@@ -59,8 +64,10 @@ public class EmprestimoDAO implements IEmprestimoDAO {
             st.setDate(2, Util.dateParaSql(emprestimo.getData()));   
             st.setInt(3, emprestimo.getDataPrevista());
             st.setDate(4, Util.dateParaSql(emprestimo.getEntrega()));
-            st.setInt(5, emprestimo.getId());
-
+            st.setInt(5, emprestimo.getAluno().getId());
+            st.setInt(6, emprestimo.getLivro().getId());
+            st.setInt(7, emprestimo.getId());
+            
             st.executeUpdate();
 
             return true;
@@ -80,7 +87,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT id,reserva,data,dataPrevista,entrega FROM Emprestimo;";
+            String sql = "SELECT id,reserva,data,dataPrevista,entrega,idaluno,idlivro FROM Emprestimo;";
             st = connection.prepareStatement(sql);
 
             rs = st.executeQuery();
@@ -93,17 +100,21 @@ public class EmprestimoDAO implements IEmprestimoDAO {
                 Date data = rs.getDate("data");
                 int dataP = rs.getInt("dataPrevista");
                 Date entrega = rs.getDate("entrega");
-
+                int idAluno = rs.getInt("idaluno");
+                int idLivro = rs.getInt("idlivro");
+                
                 emprestimo.setId(id);
                 emprestimo.setReserva(reserva);
                 emprestimo.setData(data);
                 emprestimo.setDataPrevista(dataP);
                 emprestimo.setEntrega(entrega);
+                emprestimo.setAluno(facadePessoa.buscarAluno(idAluno));
+                emprestimo.setLivro(facadeLivro.buscarLivro(idLivro));
                 
                 lista.add(emprestimo);
             }
 
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             //
         } finally {
             ConnectionFactory.closeConnection(connection, st, rs);
@@ -121,7 +132,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT id,reserva,data,dataPrevista,entrega FROM emprestimo WHERE id=?;";
+            String sql = "SELECT id,reserva,data,dataPrevista,entrega,idaluno,idlivro FROM emprestimo WHERE id=?;";
             st = connection.prepareStatement(sql);
 
             st.setInt(1, id);
@@ -135,15 +146,19 @@ public class EmprestimoDAO implements IEmprestimoDAO {
                 Date data = rs.getDate("data");
                 int dataP = rs.getInt("dataPrevista");
                 Date entrega = rs.getDate("entrega");
+                int idAluno = rs.getInt("idaluno");
+                int idLivro = rs.getInt("idlivro");
                 
                 emprestimo.setId(id);
                 emprestimo.setReserva(reserva);
                 emprestimo.setData(data);
                 emprestimo.setDataPrevista(dataP);
                 emprestimo.setEntrega(entrega);
+                emprestimo.setAluno(facadePessoa.buscarAluno(idAluno));
+                emprestimo.setLivro(facadeLivro.buscarLivro(idLivro));
             }
             return emprestimo;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             return null;
         } finally {
             ConnectionFactory.closeConnection(connection, st, rs);
