@@ -43,7 +43,6 @@ public class main {
     private static BibliotecaFacadePessoa facadePessoa = new BibliotecaFacadePessoa();
     private static BibliotecaFacadeLivro facadeLivro = new BibliotecaFacadeLivro();
     private static BibliotecaFacadeEmprestimo facadeEmprestimo = new BibliotecaFacadeEmprestimo();
-    private static Util util = new Util();
     
     public static void main(String[] args) throws Exception {
         int op;
@@ -56,6 +55,7 @@ public class main {
             System.out.println("4-Buscar:");
             System.out.println("5-Remover:");
             System.out.println("6-Emprestimo:");
+            System.out.println("7 - Relatorio:");
             System.out.println("0-Sair");
             op=sc.nextInt();
             switch(op){
@@ -84,6 +84,11 @@ public class main {
                 
                 case 6:{
                     MenuEmprestimo();
+                    break;
+                }
+                
+                case 7:{
+                    
                     break;
                 }
                 
@@ -157,7 +162,7 @@ public class main {
                         else{
                             Pessoa pessoa =  new Pessoa();
                             pessoa.setNome(nome);
-                            pessoa.setNascimento(util.stringToDate(dataNascimento));
+                            pessoa.setNascimento(Util.stringToDate(dataNascimento));
                             pessoa.setEndereco(e);
                             facadePessoa.cadastrarPessoa(pessoa);
 
@@ -195,7 +200,7 @@ public class main {
                         else{
                             Pessoa pessoa =  new Pessoa();
                             pessoa.setNome(nome);
-                            pessoa.setNascimento(util.stringToDate(dataNascimento));
+                            pessoa.setNascimento(Util.stringToDate(dataNascimento));
                             pessoa.setEndereco(e);
                             facadePessoa.cadastrarPessoa(pessoa);
 
@@ -371,7 +376,7 @@ public class main {
                             else{
                                 Pessoa pessoa =  new Pessoa();
                                 pessoa.setNome(nome);
-                                pessoa.setNascimento(util.stringToDate(dataNascimento));
+                                pessoa.setNascimento(Util.stringToDate(dataNascimento));
                                 pessoa.setEndereco(endereco);
                                 facadePessoa.editarPessoa(pessoa);
 
@@ -416,7 +421,7 @@ public class main {
                             else{
                                 Pessoa pessoa =  new Pessoa();
                                 pessoa.setNome(nome);
-                                pessoa.setNascimento(util.stringToDate(dataNascimento));
+                                pessoa.setNascimento(Util.stringToDate(dataNascimento));
                                 pessoa.setEndereco(endereco);
                                 facadePessoa.editarPessoa(pessoa);
 
@@ -987,14 +992,14 @@ public class main {
                         System.out.println("Dados Invalidos!");
                     }
                     else{
-                        //System.out.println("Informe a data de entrega:");
-                        //int dataprevista
-                        
-                        Emprestimo emprestimo = new Emprestimo();
                         if(livro.getExemplaresDisponiveis()== 0){
                             System.out.println("O livro nao tem exempares disponiveis!");
                         }
                         else{
+                            System.out.println("Informe a data de entrega:(dd/mm/aaaa)");
+                            String entrega = sc.nextLine();
+                            
+                            Emprestimo emprestimo = new Emprestimo();
                             emprestimo.setAluno(aluno);
                             emprestimo.setLivro(livro);
                             emprestimo.setReserva(true);
@@ -1002,6 +1007,12 @@ public class main {
                             Date data = new Date(System.currentTimeMillis());
                             formato.format(data);
                             emprestimo.setData(data);
+                            
+                            emprestimo.setEntrega(Util.stringToDate(entrega));
+                            
+                            if(long.class.cast(emprestimo.getDataPrevista()) < long.class.cast(emprestimo.getEntrega())){
+                                System.out.println("Entrega atrasada! Cobre a multa!");
+                            }
                             
                             facadeEmprestimo.cadastrarEmprestimo(emprestimo);
                             
