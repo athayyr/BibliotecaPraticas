@@ -14,9 +14,9 @@ import java.util.ResourceBundle;
  */
 public class Properties {
     
-    public static final ResourceBundle RESOURCE_CONFIGURACAO = ResourceBundle.getBundle("configuracao");
-    public static final ResourceBundle RESOURCE_STRINGS_ERRO = ResourceBundle.getBundle("stringsErro");
-    public static final ResourceBundle RESOURCE_STRINGS_SUCESSO = ResourceBundle.getBundle("stringsSucesso");
+    public static final ResourceBundle RESOURCE_CONFIGURACAO = ResourceBundle.getBundle("br\\com\\praticas\\properties\\configuracao");
+    public static final ResourceBundle RESOURCE_STRINGS_ERRO = ResourceBundle.getBundle("br\\com\\praticas\\properties\\stringsErro");
+    public static final ResourceBundle RESOURCE_STRINGS_SUCESSO = ResourceBundle.getBundle("br\\com\\praticas\\properties\\stringsSucesso");
     
     //Parte de configuração
     public static final String JDBC_DRIVER = "jdbc_driver";
