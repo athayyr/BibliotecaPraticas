@@ -144,6 +144,9 @@ public class MenuPrincipal {
                 }
                 
                 case 2:{
+                    System.out.println("Informe o id:");
+                    int idAluno = sc.nextInt();
+                    sc.nextLine();
                     System.out.println("Informe o nome:");
                     String nome = sc.nextLine();
                     System.out.println("Informe a data de nascimento:");
@@ -164,13 +167,17 @@ public class MenuPrincipal {
                         }
                         else{
                             Pessoa pessoa =  new Pessoa();
+                            pessoa.setId(idAluno);
                             pessoa.setNome(nome);
                             pessoa.setNascimento(Util.stringToDate(dataNascimento));
                             pessoa.setEndereco(e);
                             facadePessoa.cadastrarPessoa(pessoa);
 
                             Aluno aluno = new Aluno();
-                            aluno.setId(pessoa.getId());
+                            aluno.setId(idAluno);
+                            aluno.setNome(nome);
+                            aluno.setNascimento(Util.stringToDate(dataNascimento));
+                            aluno.setEndereco(e);
                             aluno.setCurso(curso);
                             aluno.setMatricula(matricula);
                             facadePessoa.cadastrarAluno(aluno);
@@ -182,6 +189,9 @@ public class MenuPrincipal {
                 }
                 
                 case 3:{
+                    System.out.println("Informe o id do funcionario:");
+                    int idFuncionario = sc.nextInt();
+                    sc.nextLine();
                     System.out.println("Informe o nome:");
                     String nome = sc.nextLine();
                     System.out.println("Informe a data de nascimento:");
@@ -203,6 +213,7 @@ public class MenuPrincipal {
                         }
                         else{
                             Pessoa pessoa =  new Pessoa();
+                            pessoa.setId(idFuncionario);
                             pessoa.setNome(nome);
                             pessoa.setNascimento(Util.stringToDate(dataNascimento));
                             pessoa.setEndereco(e);
