@@ -37,7 +37,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
 
             st.setBoolean(1, emprestimo.getReserva());
             st.setDate(2, Util.dateParaSql(emprestimo.getData()));            
-            st.setInt(3, emprestimo.getDataPrevista());
+            st.setDate(3, Util.dateParaSql(emprestimo.getDataPrevista()));
             st.setDate(4, Util.dateParaSql(emprestimo.getEntrega()));
             st.setInt(5, emprestimo.getAluno().getId());
             st.setInt(6, emprestimo.getLivro().getId());
@@ -62,7 +62,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
             
             st.setBoolean(1, emprestimo.getReserva());
             st.setDate(2, Util.dateParaSql(emprestimo.getData()));   
-            st.setInt(3, emprestimo.getDataPrevista());
+            st.setDate(3, Util.dateParaSql(emprestimo.getDataPrevista()));
             st.setDate(4, Util.dateParaSql(emprestimo.getEntrega()));
             st.setInt(5, emprestimo.getAluno().getId());
             st.setInt(6, emprestimo.getLivro().getId());
@@ -98,7 +98,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
                 int id = rs.getInt("id");
                 boolean reserva = rs.getBoolean("reserva");
                 Date data = rs.getDate("data");
-                int dataP = rs.getInt("dataPrevista");
+                Date dataP = rs.getDate("dataPrevista");
                 Date entrega = rs.getDate("entrega");
                 int idAluno = rs.getInt("idaluno");
                 int idLivro = rs.getInt("idlivro");
@@ -144,7 +144,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
 
                 boolean reserva = rs.getBoolean("reserva");
                 Date data = rs.getDate("data");
-                int dataP = rs.getInt("dataPrevista");
+                Date dataP = rs.getDate("dataPrevista");
                 Date entrega = rs.getDate("entrega");
                 int idAluno = rs.getInt("idaluno");
                 int idLivro = rs.getInt("idlivro");
