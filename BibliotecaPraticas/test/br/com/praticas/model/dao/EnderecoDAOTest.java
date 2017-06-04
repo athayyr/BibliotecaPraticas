@@ -5,6 +5,7 @@
  */
 package br.com.praticas.model.dao;
 
+import br.com.praticas.facade.BibliotecaFacadePessoa;
 import br.com.praticas.model.bean.Endereco;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,11 +20,12 @@ public class EnderecoDAOTest {
     }
 
     @Test
-    public void create() {
+    public void create() throws Exception {
         
-        Endereco endereco = new Endereco("Maria", "251", "Coremas");     
+        Endereco endereco = new Endereco("Agora", "agora", "agora");     
         
-        EnderecoDAO dao = new EnderecoDAO();
+        BibliotecaFacadePessoa f = new BibliotecaFacadePessoa();
+        f.cadastrarEndereco(endereco);
     }
     
 }
