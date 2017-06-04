@@ -64,7 +64,7 @@ public class main {
                 }
                 
                 case 2:{
-                    
+                    menuEditar();
                     break;
                 }
                 
@@ -281,6 +281,8 @@ public class main {
                             livro.setSecao(secao);
                             livro.setExemplares(numExemplares);
                             livro.setExemplaresDisponiveis(numExemplares);
+                            
+                            facadeLivro.cadastrarLivro(livro);
                         }
                     
                     }
@@ -300,6 +302,257 @@ public class main {
                 }
                 
             }     
+    }
+    
+    private static void menuEditar(){
+        System.out.println("1- Editar Endereco:");
+        System.out.println("2- Editar Aluno:");
+        System.out.println("3- Editar Funcionario:");
+        System.out.println("4- Editar Autor:");
+        System.out.println("5- Editar Editora:");
+        System.out.println("6- Editar Secao:");
+        System.out.println("7- Editat Livro:");
+        System.out.println("0- Sair:");
+        int opEditar = sc.nextInt();
+        switch(opEditar){
+                case 1:{
+                    System.out.println("Informe o id do endereco:");
+                    int idEndereco = sc.nextInt();
+                    
+                    try{
+                        Endereco endereco = facadePessoa.buscarEndereco(idEndereco);
+                        if(endereco == null){
+                            System.out.println("Endereco não encontrado");
+                        }
+                        else{
+                            System.out.println("Informe a cidade:");
+                            String cidade = sc.nextLine();
+                            System.out.println("Informe a rua:");
+                            String rua = sc.nextLine();
+                            System.out.println("Informe o numero:");
+                            String numero = sc.nextLine();
+
+                            endereco.setCidade(cidade);
+                            endereco.setRua(rua);
+                            endereco.setNumero(numero);
+
+                            facadePessoa.editarEndereco(endereco);
+                        }
+                    }
+                    catch(Exception ex){
+                        ex.getMessage();
+                    }
+                }
+                
+                case 2:{
+                    System.out.println("Informe o id do aluno:");
+                    int idAluno = sc.nextInt();
+                    try{
+                        Aluno aluno = facadePessoa.buscarAluno(idAluno);
+                        if(aluno == null){
+                            System.out.println("Aluno não encontrado!");
+                        }
+                        else{
+                            System.out.println("Informe o nome:");
+                            String nome = sc.nextLine();
+                            System.out.println("Informe a data de nascimento:");
+                            String dataNascimento = sc.nextLine();
+                            System.out.println("Informe a matricula:");
+                            int matricula = sc.nextInt();
+                            System.out.println("Informe o curso:");
+                            String curso = sc.nextLine();
+                            System.out.println("Informe o id do endereco:");
+                            int idEndereco = sc.nextInt();
+                            
+                            Endereco endereco = facadePessoa.buscarEndereco(idEndereco);
+                            if(endereco == null){
+                                System.out.println("Endereco não encontrado!");
+                            }
+                            else{
+                                Pessoa pessoa =  new Pessoa();
+                                pessoa.setNome(nome);
+                                pessoa.setNascimento(util.stringToDate(dataNascimento));
+                                pessoa.setEndereco(endereco);
+                                facadePessoa.editarPessoa(pessoa);
+
+                                aluno.setId(pessoa.getId());
+                                aluno.setCurso(curso);
+                                aluno.setMatricula(matricula);
+                                facadePessoa.editarAluno(aluno);
+                                }
+                        }
+                    }catch(Exception ex){
+                        ex.getMessage();
+                    }
+                    break;
+                }
+                
+                case 3:{
+                    System.out.println("Informe o id do Funcionario:");
+                    int idFuncionario = sc.nextInt();
+                    try{
+                        Funcionario funcionario = facadePessoa.buscarFuncionario(idFuncionario);
+                        if(funcionario == null){
+                            System.out.println("Aluno não encontrado!");
+                        }
+                        else{
+                            System.out.println("Informe o nome:");
+                            String nome = sc.nextLine();
+                            System.out.println("Informe a data de nascimento:");
+                            String dataNascimento = sc.nextLine();
+                            System.out.println("Informe o cargo:");
+                            String cargo = sc.nextLine();
+                            System.out.println("Informe o login:");
+                            String login = sc.nextLine();
+                            System.out.println("Informe a senha:");
+                            String senha = sc.nextLine();
+                            System.out.println("Informe o id do endereco:");
+                            int idEndereco = sc.nextInt();
+                            
+                            Endereco endereco = facadePessoa.buscarEndereco(idEndereco);
+                            if(endereco == null){
+                                System.out.println("Endereco não encontrado!");
+                            }
+                            else{
+                                Pessoa pessoa =  new Pessoa();
+                                pessoa.setNome(nome);
+                                pessoa.setNascimento(util.stringToDate(dataNascimento));
+                                pessoa.setEndereco(endereco);
+                                facadePessoa.editarPessoa(pessoa);
+
+                                funcionario.setCargo(cargo);
+                                funcionario.setLogin(login);
+                                funcionario.setSenha(senha);
+                                facadePessoa.editarFuncionario(funcionario);
+                                }
+                        }
+                    }catch(Exception ex){
+                        ex.getMessage();
+                    }
+                    break;
+                }
+                
+                case 4:{
+                    System.out.println("Informe o id do autor:");
+                    int idAutor = sc.nextInt();
+                    
+                    try{
+                        Autor autor = facadeLivro.buscarAutor(idAutor);
+                        if(autor == null){
+                            System.out.println("Autor não encontrado!");
+                        }
+                        else{
+                            System.out.println("Informe o nome do autor:");
+                            String nome = sc.nextLine();
+                            autor.setNome(nome);
+                            
+                            facadeLivro.editarAutor(autor);
+                        }
+                    }
+                    catch(Exception ex){
+                        ex.getMessage();
+                    }
+                    break;
+                }
+                case 5:{
+                    System.out.println("Informe o id da editora:");
+                    int idEditora = sc.nextInt();
+                    
+                    try{
+                        Editora editora = facadeLivro.buscarEditora(idEditora);
+                        if(editora == null){
+                            System.out.println("Editora não encontrada!");
+                        }
+                        else{
+                            System.out.println("Informe o nome da editora:");
+                            String nome = sc.nextLine();
+                            editora.setNome(nome);
+                            facadeLivro.editarEditora(editora);
+                        }
+                    }
+                    catch(Exception ex){
+                        ex.getMessage();
+                    }
+                    break;
+                }
+                
+                case 6:{
+                    System.out.println("Informe o id da secao:");
+                    int idSecao = sc.nextInt();
+                    
+                    try{
+                        Secao secao = facadeLivro.buscarSecao(idSecao);
+                        if(secao == null){
+                            System.out.println("Secao não encontrada!");
+                        }
+                        else{
+                            System.out.println("Informe a descricao da secao:");
+                            String descricao = sc.nextLine();
+                            secao.setDescricao(descricao);
+                            
+                            facadeLivro.editarSecao(secao);
+                        }
+                    }
+                    catch(Exception ex){
+                        ex.getMessage();
+                    }
+                    break;
+                }
+                
+                case 7:{
+                    System.out.println("Informe o id do livro:");
+                    int idLivro = sc.nextInt();
+                    
+                    try{
+                        Livro livro = facadeLivro.buscarLivro(idLivro);
+                        if(livro == null){
+                            System.out.println("Livro não encontrado!");
+                        }
+                        else{
+                            System.out.println("Informe o id do autor:");
+                            int idAutor = sc.nextInt();  
+                            System.out.println("Informe o id da editora:");
+                            int idEditora = sc.nextInt();
+                            System.out.println("Informe o id da secao");
+                            int idSecao = sc.nextInt();
+                            Secao secao = facadeLivro.buscarSecao(idSecao);
+                            Editora editora = facadeLivro.buscarEditora(idEditora);
+                            Autor autor = facadeLivro.buscarAutor(idAutor);
+
+                            if(editora == null || secao == null || autor == null){
+                                System.out.println("Dados Invalidos!");
+                            }
+
+                            else{
+                                System.out.println("Informe o numero de exemplares:");
+                                int numExemplares = sc.nextInt();
+                            
+                                livro.setAutor(autor);
+                                livro.setEditora(editora);
+                                livro.setSecao(secao);
+                                livro.setExemplares(numExemplares);
+                                livro.setExemplaresDisponiveis(numExemplares);
+                                
+                                facadeLivro.editarLivro(livro);
+                            }
+                        }
+                    }
+                    catch(Exception ex){
+                        ex.getMessage();
+                    }
+                }
+                
+                case 0:{
+                    System.out.println("Saindo...");
+                    break;
+                }
+                
+                default:{
+                    System.out.println("Opcao Invalida!");
+                    break;
+                }
+                
+            }
     }
     
     private static void menuBuscar(){
@@ -802,8 +1055,6 @@ public class main {
                 break;
             }
         }
-    }
-    
-    
+    } 
     
 }
