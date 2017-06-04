@@ -119,7 +119,7 @@ public class main {
         System.out.println("7- Cadastrar Livro:");
         System.out.println("0- Sair:");
         opCadastrar = sc.nextInt();
-        
+        sc.nextLine();
         switch(opCadastrar){
                 case 1:{
                     System.out.println("Informe a cidade:");
@@ -128,6 +128,7 @@ public class main {
                     String rua = sc.nextLine();
                     System.out.println("Informe o numero:");
                     String numero = sc.nextLine();
+                    sc.nextLine();
                     
                     Endereco endereco = new Endereco();
                     endereco.setCidade(cidade);
@@ -149,10 +150,12 @@ public class main {
                     String dataNascimento = sc.nextLine();
                     System.out.println("Informe a matricula:");
                     int matricula = sc.nextInt();
+                    sc.nextLine();
                     System.out.println("Informe o curso:");
                     String curso = sc.nextLine();
                     System.out.println("Informe o id do endereco:");
                     int idEndereco = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Endereco e = facadePessoa.buscarEndereco(idEndereco);
@@ -191,6 +194,7 @@ public class main {
                     String senha = sc.nextLine();
                     System.out.println("Informe o id do endereco:");
                     int idEndereco = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Endereco e = facadePessoa.buscarEndereco(idEndereco);
@@ -265,9 +269,12 @@ public class main {
                         System.out.println("Informe o id do autor:");
                         int idAutor = sc.nextInt();  
                         System.out.println("Informe o id da editora:");
+                        sc.nextLine();
                         int idEditora = sc.nextInt();
+                        sc.nextLine();
                         System.out.println("Informe o id da secao");
                         int idSecao = sc.nextInt();
+                        sc.nextLine();
                         Secao secao = facadeLivro.buscarSecao(idSecao);
                         Editora editora = facadeLivro.buscarEditora(idEditora);
                         Autor autor = facadeLivro.buscarAutor(idAutor);
@@ -323,6 +330,7 @@ public class main {
                 case 1:{
                     System.out.println("Informe o id do endereco:");
                     int idEndereco = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Endereco endereco = facadePessoa.buscarEndereco(idEndereco);
@@ -352,6 +360,7 @@ public class main {
                 case 2:{
                     System.out.println("Informe o id do aluno:");
                     int idAluno = sc.nextInt();
+                    sc.nextLine();
                     try{
                         Aluno aluno = facadePessoa.buscarAluno(idAluno);
                         if(aluno == null){
@@ -364,10 +373,12 @@ public class main {
                             String dataNascimento = sc.nextLine();
                             System.out.println("Informe a matricula:");
                             int matricula = sc.nextInt();
+                            sc.nextLine();
                             System.out.println("Informe o curso:");
                             String curso = sc.nextLine();
                             System.out.println("Informe o id do endereco:");
                             int idEndereco = sc.nextInt();
+                            sc.nextLine();
                             
                             Endereco endereco = facadePessoa.buscarEndereco(idEndereco);
                             if(endereco == null){
@@ -395,6 +406,7 @@ public class main {
                 case 3:{
                     System.out.println("Informe o id do Funcionario:");
                     int idFuncionario = sc.nextInt();
+                    sc.nextLine();
                     try{
                         Funcionario funcionario = facadePessoa.buscarFuncionario(idFuncionario);
                         if(funcionario == null){
@@ -413,6 +425,7 @@ public class main {
                             String senha = sc.nextLine();
                             System.out.println("Informe o id do endereco:");
                             int idEndereco = sc.nextInt();
+                            sc.nextLine();
                             
                             Endereco endereco = facadePessoa.buscarEndereco(idEndereco);
                             if(endereco == null){
@@ -440,6 +453,7 @@ public class main {
                 case 4:{
                     System.out.println("Informe o id do autor:");
                     int idAutor = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Autor autor = facadeLivro.buscarAutor(idAutor);
@@ -462,6 +476,7 @@ public class main {
                 case 5:{
                     System.out.println("Informe o id da editora:");
                     int idEditora = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Editora editora = facadeLivro.buscarEditora(idEditora);
@@ -484,6 +499,7 @@ public class main {
                 case 6:{
                     System.out.println("Informe o id da secao:");
                     int idSecao = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Secao secao = facadeLivro.buscarSecao(idSecao);
@@ -507,6 +523,7 @@ public class main {
                 case 7:{
                     System.out.println("Informe o id do livro:");
                     int idLivro = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Livro livro = facadeLivro.buscarLivro(idLivro);
@@ -516,10 +533,14 @@ public class main {
                         else{
                             System.out.println("Informe o id do autor:");
                             int idAutor = sc.nextInt();  
+                            sc.nextLine();
                             System.out.println("Informe o id da editora:");
                             int idEditora = sc.nextInt();
+                            sc.nextLine();
                             System.out.println("Informe o id da secao");
                             int idSecao = sc.nextInt();
+                            sc.nextLine();
+                            
                             Secao secao = facadeLivro.buscarSecao(idSecao);
                             Editora editora = facadeLivro.buscarEditora(idEditora);
                             Autor autor = facadeLivro.buscarAutor(idAutor);
@@ -574,6 +595,7 @@ public class main {
                 case 1:{
                     System.out.println("Informe o id do endereco:");
                     int idEndereco = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Endereco endereco = facadePessoa.buscarEndereco(idEndereco);
@@ -592,6 +614,7 @@ public class main {
                 case 2:{
                     System.out.println("Informe o id do aluno:");
                     int idAluno = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Aluno aluno = facadePessoa.buscarAluno(idAluno);
@@ -611,6 +634,7 @@ public class main {
                 case 3:{
                     System.out.println("Informe o id do funcionario:");
                     int idFuncionario = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Funcionario funcionario = facadePessoa.buscarFuncionario(idFuncionario);
@@ -630,6 +654,7 @@ public class main {
                 case 4:{
                     System.out.println("Informe o id do autor:");
                     int idAutor = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Autor autor = facadeLivro.buscarAutor(idAutor);
@@ -648,6 +673,7 @@ public class main {
                 case 5:{
                     System.out.println("Informe o id da editora:");
                     int idEditora = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Editora editora = facadeLivro.buscarEditora(idEditora);
@@ -667,6 +693,7 @@ public class main {
                 case 6:{
                     System.out.println("Informe o id da secao:");
                     int idSecao = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Secao secao = facadeLivro.buscarSecao(idSecao);
@@ -686,6 +713,7 @@ public class main {
                 case 7:{
                     System.out.println("Informe o id do livro:");
                     int idLivro = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Livro livro = facadeLivro.buscarLivro(idLivro);
@@ -724,6 +752,7 @@ public class main {
         System.out.println("7- Listar Livro:");
         System.out.println("0- Sair:");
         int opListar = sc.nextInt();
+        sc.nextLine();
         
         switch(opListar){
                 case 1:{
@@ -830,10 +859,12 @@ public class main {
         System.out.println("7- Deletar Livro:");
         System.out.println("0- Sair:");
         int opEditar = sc.nextInt();
+        sc.nextLine();
         switch(opEditar){
                 case 1:{
                     System.out.println("Informe o id do endereco:");
                     int idEndereco = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Endereco endereco = facadePessoa.buscarEndereco(idEndereco);
@@ -852,6 +883,7 @@ public class main {
                 case 2:{
                     System.out.println("Informe o id do aluno:");
                     int idAluno = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Aluno aluno = facadePessoa.buscarAluno(idAluno);
@@ -871,6 +903,7 @@ public class main {
                 case 3:{
                     System.out.println("Informe o id do funcionario:");
                     int idFuncionario = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Funcionario funcionario = facadePessoa.buscarFuncionario(idFuncionario);
@@ -890,6 +923,7 @@ public class main {
                 case 4:{
                     System.out.println("Informe o id do autor:");
                     int idAutor = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Autor autor = facadeLivro.buscarAutor(idAutor);
@@ -908,6 +942,7 @@ public class main {
                 case 5:{
                     System.out.println("Informe o id da editora:");
                     int idEditora = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Editora editora = facadeLivro.buscarEditora(idEditora);
@@ -927,6 +962,7 @@ public class main {
                 case 6:{
                     System.out.println("Informe o id da secao:");
                     int idSecao = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Secao secao = facadeLivro.buscarSecao(idSecao);
@@ -946,6 +982,7 @@ public class main {
                 case 7:{
                     System.out.println("Informe o id do livro:");
                     int idLivro = sc.nextInt();
+                    sc.nextLine();
                     
                     try{
                         Livro livro = facadeLivro.buscarLivro(idLivro);
@@ -979,12 +1016,15 @@ public class main {
         System.out.println("2- Devolucao:");
         System.out.println("0- Sair:");
         int opEmprestimo = sc.nextInt();
+        sc.nextLine();
         switch(opEmprestimo){
             case 1:{
                 System.out.println("Informe o id do aluno:");
                 int idAluno = sc.nextInt();
+                sc.nextLine();
                 System.out.println("Informe o id do livro:");
                 int idLivro = sc.nextInt();
+                sc.nextLine();
                 try{
                     Aluno aluno = facadePessoa.buscarAluno(idAluno);
                     Livro livro = facadeLivro.buscarLivro(idLivro);
@@ -1032,6 +1072,7 @@ public class main {
             case 2:{
                 System.out.println("Informe o id do emprestimo:");
                 int idEmprestimo = sc.nextInt();
+                sc.nextLine();
                 try{
                     Emprestimo emprestimo = facadeEmprestimo.buscarEmprestimo(idEmprestimo);
                     if(emprestimo == null){
