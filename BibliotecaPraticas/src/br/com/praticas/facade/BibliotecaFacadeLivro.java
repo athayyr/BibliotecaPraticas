@@ -14,6 +14,7 @@ import br.com.praticas.interfaces.IAutorDAO;
 import br.com.praticas.interfaces.IEditoraDAO;
 import br.com.praticas.interfaces.ILivroDAO;
 import br.com.praticas.interfaces.ISecaoDAO;
+import java.util.List;
 
 /**
  *
@@ -81,21 +82,44 @@ public class BibliotecaFacadeLivro {
        livroDAO.delete(livro);
    }
    
-   public void listarAutor() throws Exception{
-       autorDAO.list();
+   public List<Autor> listarAutor() throws Exception{
+       List<Autor> lista = autorDAO.list();
+       return lista;
    }
    
-   public void listarEditora() throws Exception{
-       editoraDAO.list();
+   public List<Editora> listarEditora() throws Exception{
+       List<Editora> lista = editoraDAO.list();
+       return lista;
    }
    
-   public void listarSecao() throws Exception{
-       secaoDAO.list();
+   public List<Secao> listarSecao() throws Exception{
+       List<Secao> lista = secaoDAO.list();
+       return lista;
    }
    
-   public void listarLivro() throws Exception{
-       livroDAO.list();
+   public List<Livro> listarLivro() throws Exception{
+       List<Livro> lista = livroDAO.list();
+       return lista;
    }
    
+   public Autor buscarAutor(int id) throws Exception{
+       Autor autor = autorDAO.search(id);
+       return autor;
+   }
+   
+   public Secao buscarSecao(int id) throws Exception{
+       Secao secao = secaoDAO.search(id);
+       return secao;
+   }
+   
+   public Editora buscarEditora(int id) throws Exception{
+       Editora editora = editoraDAO.search(id);
+       return editora;
+   }
+   
+   public Livro buscarLivro(int id) throws Exception{
+       Livro livro = livroDAO.search(id);
+       return livro;
+   }
     
 }
