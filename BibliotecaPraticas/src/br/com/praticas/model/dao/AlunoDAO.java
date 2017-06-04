@@ -32,25 +32,17 @@ public class AlunoDAO implements IAlunoDAO{
         PreparedStatement st = null;
 
         try {
-            Pessoa pessoa = new Pessoa();
-            pessoa.setId(aluno.getId());
-            pessoa.setNome(aluno.getNome());
-            pessoa.setEndereco(aluno.getEndereco());
-            pessoa.setNascimento(aluno.getNascimento());
-            
-            if(DAOFactory.createPessoaDAO().create(pessoa)){
-            st = connection.prepareStatement("INSERT INTO aluno (id, matricula, curso) VALUES(?,?,?)");
+            st = connection.prepareStatement("INSERT INTO aluno (id,nome,nascimento,endereco, matricula, curso) VALUES(?,?,?,?,?,?)");
             st.setInt(1, aluno.getId());
-            st.setInt(2, aluno.getMatricula());
-            st.setString(3, aluno.getCurso());
-
+            st.setString(2, aluno.getNome());
+            st.setDate(3, Util.dateParaSql(aluno.getNascimento()));
+            st.setInt(4, aluno.getEndereco().getId());
+            st.setInt(5, aluno.getMatricula());
+            st.setString(6, aluno.getCurso());
+            
             st.executeUpdate();
 
             return true;
-            }
-            else{
-                throw new Exception(Properties.getStringErroValue(Properties.ERRO_INSERIR_PESSOA));
-            }
         } catch (Exception ex) {
             throw new Exception(Properties.getStringErroValue(Properties.ERRO_INSERIR_ALUNO));
         } finally {
