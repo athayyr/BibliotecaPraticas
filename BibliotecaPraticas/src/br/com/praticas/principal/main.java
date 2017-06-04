@@ -32,7 +32,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author VAAR
+ * @author José Higor
  */
 public class main {
 
