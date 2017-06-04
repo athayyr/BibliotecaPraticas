@@ -18,6 +18,8 @@ public class Emprestimo {
     private Date data;
     private int dataPrevista;
     private Date Entrega;
+    private Aluno aluno;
+    private Livro livro;
 
     public Emprestimo() {
     }
@@ -70,6 +72,24 @@ public class Emprestimo {
         this.Entrega = Entrega;
     }
 
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+    
+    
+    
     @Override
     public String toString() {
         return "Emprestimo{" + "id=" + id + ", reserva=" + reserva + ", data=" + data + ", dataPrevista=" + dataPrevista + ", Entrega=" + Entrega + '}';
