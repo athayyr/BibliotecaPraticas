@@ -715,7 +715,7 @@ public class main {
                 
             }
     }
-    
+   //faltando ajeitar a dataprevista 
     private static void MenuEmprestimo(){
         System.out.println("1- Emprestimo:");
         System.out.println("2- Devolucao:");
@@ -803,6 +803,7 @@ public class main {
             }
         }
     }
+    
     
     
 }
