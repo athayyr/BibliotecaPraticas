@@ -37,5 +37,11 @@ public class Secao {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }  
+    }
+
+        @Override
+    public String toString() {
+        return "Secao{" + "id=" + id + ", descricao=" + descricao + '}';
+    }
+    
 }
