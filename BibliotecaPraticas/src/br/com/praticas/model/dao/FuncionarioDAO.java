@@ -64,21 +64,17 @@ public class FuncionarioDAO implements IFuncionarioDao{
         connection = ConnectionFactory.getConnection();
 
         PreparedStatement st = null;
-
-        try {
-            Pessoa pessoa = new Pessoa();
-            pessoa.setId(funcionario.getId());
+        try{
+            st = connection.prepareStatement("DELETE FROM funcionario WHERE id = ?");
+            st.setInt(1, funcionario.getId());
+            st.executeUpdate();
             
-            if(DAOFactory.createPessoaDAO().delete(pessoa)){
-                st = connection.prepareStatement("DELETE FROM funcionario WHERE id = ?");
-                st.setInt(1, funcionario.getId());
-                st.executeUpdate();
-                return true;
-            }
-            else{
-                throw new Exception(Properties.getStringErroValue(Properties.ERRO_DELETAR_PESSOA));
-            }
-        } catch (Exception ex) {
+            st = connection.prepareStatement("DELETE FROM pessoa WHERE id = ?");
+            st.setInt(1, funcionario.getId());
+            st.executeUpdate();
+            return true;
+        }    
+        catch (Exception ex) {
             throw new Exception(Properties.getStringErroValue(Properties.ERRO_DELETAR_FUNCIONARIO));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
