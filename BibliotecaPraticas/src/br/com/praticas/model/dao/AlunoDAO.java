@@ -65,19 +65,18 @@ public class AlunoDAO implements IAlunoDAO{
         PreparedStatement st = null;
 
         try {
-            Pessoa pessoa = new Pessoa();
-            pessoa.setId(aluno.getId());
+            st = connection.prepareStatement("DELETE FROM aluno WHERE id = ?");
+            st.setInt(1, aluno.getId());
+            st.executeUpdate();
             
-            if(DAOFactory.createPessoaDAO().delete(pessoa)){
-                st = connection.prepareStatement("DELETE FROM aluno WHERE id = ?");
-                st.setInt(1, aluno.getId());
-                st.executeUpdate();
-                return true;
-            }
-            else{
-                throw new Exception(Properties.getStringErroValue(Properties.ERRO_DELETAR_PESSOA));
-            }
-        } catch (Exception ex) {
+            st = connection.prepareStatement("DELETE FROM pessoa WHERE id = ?");
+            st.setInt(1, aluno.getId());
+            st.executeUpdate();
+            
+            return true;
+        }
+        
+        catch (Exception ex) {
             throw new Exception(Properties.getStringErroValue(Properties.ERRO_DELETAR_ALUNO));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
