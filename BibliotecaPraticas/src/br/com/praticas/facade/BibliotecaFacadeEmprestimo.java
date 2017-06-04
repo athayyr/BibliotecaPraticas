@@ -8,6 +8,7 @@ package br.com.praticas.facade;
 import br.com.praticas.factory.DAOFactory;
 import br.com.praticas.model.bean.Emprestimo;
 import br.com.praticas.interfaces.IEmprestimoDAO;
+import java.util.List;
 
 /**
  *
@@ -29,15 +30,17 @@ public class BibliotecaFacadeEmprestimo {
        emprestimoDAO.create(emprestimo);
    }
    
-   public void buscarEmprestimo(int id) throws Exception{
-       emprestimoDAO.search(id);
+   public Emprestimo buscarEmprestimo(int id) throws Exception{
+       Emprestimo emprestimo = emprestimoDAO.search(id);
+       return emprestimo;
    }
    
    public void deletarEmprestimo(Emprestimo emprestimo) throws Exception{
        emprestimoDAO.delete(emprestimo);
    }
    
-   public void listarEmprestimo() throws Exception{
-       emprestimoDAO.list();
+   public List<Emprestimo> listarEmprestimo() throws Exception{
+       List<Emprestimo> lista = emprestimoDAO.list();
+       return lista;
    }
 }
