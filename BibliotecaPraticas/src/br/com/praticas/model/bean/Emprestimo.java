@@ -16,7 +16,7 @@ public class Emprestimo {
     private int id;
     private boolean reserva;
     private Date data;
-    private int dataPrevista;
+    private Date dataPrevista;
     private Date Entrega;
     private Aluno aluno;
     private Livro livro;
@@ -24,7 +24,7 @@ public class Emprestimo {
     public Emprestimo() {
     }
 
-    public Emprestimo(int id, boolean reserva, Date data, int dataPrevista, Date Entrega) {
+    public Emprestimo(int id, boolean reserva, Date data, Date dataPrevista, Date Entrega) {
         this.id = id;
         this.reserva = reserva;
         this.data = data;
@@ -56,11 +56,11 @@ public class Emprestimo {
         this.data = data;
     }
 
-    public int getDataPrevista() {
+    public Date getDataPrevista() {
         return dataPrevista;
     }
 
-    public void setDataPrevista(int dataPrevista) {
+    public void setDataPrevista(Date dataPrevista) {
         this.dataPrevista = dataPrevista;
     }
 
