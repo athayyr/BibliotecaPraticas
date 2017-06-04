@@ -33,10 +33,11 @@ public class PessoaDAO implements IPessoaDAO {
         PreparedStatement st = null;
 
         try {
-            st = connection.prepareStatement("INSERT INTO pessoa (nome,nascimento,endereco) VALUES(?,?,?)");
-            st.setString(1, pessoa.getNome());
-            st.setDate(2, Util.dateParaSql(pessoa.getNascimento()));
-            st.setInt(3, pessoa.getEndereco().getId());
+            st = connection.prepareStatement("INSERT INTO pessoa (id,nome,nascimento,endereco) VALUES(?,?,?,?)");
+            st.setInt(1, pessoa.getId());
+            st.setString(2, pessoa.getNome());
+            st.setDate(3, Util.dateParaSql(pessoa.getNascimento()));
+            st.setInt(4, pessoa.getEndereco().getId());
 
             st.executeUpdate();
 
