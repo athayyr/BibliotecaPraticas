@@ -32,13 +32,6 @@ public class FuncionarioDAO implements IFuncionarioDao{
         PreparedStatement st = null;
 
         try {
-            Pessoa pessoa = new Pessoa();
-            pessoa.setId(funcionario.getId());
-            pessoa.setNome(funcionario.getNome());
-            pessoa.setEndereco(funcionario.getEndereco());
-            pessoa.setNascimento(funcionario.getNascimento());
-            
-            if(DAOFactory.createPessoaDAO().create(pessoa)){
             st = connection.prepareStatement("INSERT INTO funcionario (id, cargo, login, senha) VALUES(?,?,?,?)");
             st.setInt(1, funcionario.getId());
             st.setString(2, funcionario.getCargo());
@@ -48,10 +41,6 @@ public class FuncionarioDAO implements IFuncionarioDao{
             st.executeUpdate();
 
             return true;
-            }
-            else{
-                throw new Exception(Properties.getStringErroValue(Properties.ERRO_INSERIR_PESSOA));
-            }
         } catch (Exception ex) {
             throw new Exception(Properties.getStringErroValue(Properties.ERRO_INSERIR_FUNCIONARIO));
         } finally {
@@ -88,7 +77,7 @@ public class FuncionarioDAO implements IFuncionarioDao{
         PreparedStatement st = null;
 
         try {
-            st = connection.prepareStatement("SELECT id, cargo, login, senha FROM aluno");
+            st = connection.prepareStatement("SELECT id, cargo, login, senha FROM funcionario");
 
             ResultSet rs = st.executeQuery();
 
