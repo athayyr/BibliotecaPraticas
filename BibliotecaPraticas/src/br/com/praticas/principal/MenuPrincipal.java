@@ -1069,7 +1069,7 @@ public class MenuPrincipal {
                             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                             Date data = new Date(System.currentTimeMillis());
                             formato.format(data);
-                            emprestimo.setData(new Date());
+                            emprestimo.setData(data);
                             
                             emprestimo.setEntrega(Util.stringToDate(entrega));
                             
