@@ -5,6 +5,8 @@
  */
 package br.com.praticas.principal;
 
+import br.com.praticas.util.Properties;
+
 
 /**
  *
@@ -15,7 +17,7 @@ public class main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception{        
         MenuPrincipal menuPrincipal = new MenuPrincipal();
         menuPrincipal.executar();
     }

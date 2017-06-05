@@ -8,6 +8,7 @@ package br.com.praticas.principal;
 import br.com.praticas.facade.BibliotecaFacadeEmprestimo;
 import br.com.praticas.facade.BibliotecaFacadeLivro;
 import br.com.praticas.facade.BibliotecaFacadePessoa;
+import br.com.praticas.iReport.IReport;
 import br.com.praticas.model.bean.Aluno;
 import br.com.praticas.model.bean.Autor;
 import br.com.praticas.model.bean.Editora;
@@ -85,6 +86,9 @@ public class MenuPrincipal {
                 }
                 
                 case 7:{
+                    IReport rp = new IReport();
+                    
+                    rp.iReport();
                     
                     break;
                 }

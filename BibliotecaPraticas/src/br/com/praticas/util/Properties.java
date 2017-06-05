@@ -23,6 +23,7 @@ public class Properties {
     public static final String JDBC_URL = "jdbc_url";
     public static final String JDBC_USER = "jdbc_user";
     public static final String JDBC_PASS = "jdbc_password";
+    public static final String IREPORT = "iReport";
     
     public static String getConfiguracaoValue(String chave){
         return RESOURCE_CONFIGURACAO.getString(chave);
