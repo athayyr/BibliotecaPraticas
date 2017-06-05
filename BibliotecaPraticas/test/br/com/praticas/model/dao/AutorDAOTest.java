@@ -5,37 +5,83 @@
  */
 package br.com.praticas.model.dao;
 
+import br.com.praticas.facade.BibliotecaFacadeLivro;
 import br.com.praticas.model.bean.Autor;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  *
- * @author athay
+ * @author José Higor
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AutorDAOTest {
     
-    public AutorDAOTest() {
+    private static BibliotecaFacadeLivro facade;
+    private Autor autor;
+    
+    @BeforeClass
+    public static void inicializar(){
+        facade = new BibliotecaFacadeLivro();
     }
-
+    
+    @Before
+    public void inicializarObjetos() throws Exception{
+        autor = new Autor();
+        //facade.limparDadosAutor();
+    }
+    
+    
+    private void inserir() throws Exception{
+        autor.setNome("Teste");
+        
+        facade.cadastrarAutor(autor);
+    }
+    
     @Test
-    public void testSomeMethod() {
+    public void testeInserir() throws Exception{
+
+        int tamanhoAnterior = facade.listarAutor().size();
+
+        inserir();
         
-        Autor autor = new Autor();
+        int tamanhoAtual = facade.listarAutor().size();
         
-        autor.setNome("Teste AUTOR2");
+        assertEquals(tamanhoAnterior + 1, tamanhoAtual);
+    }
+    
+    @Test
+    public void testeEditar() throws Exception{
         
-        AutorDAO autorDAO = new AutorDAO();
+        autor = facade.listarAutor().get(0);
+       
+        autor.setNome("Teste Editado");
         
-        autor = autorDAO.search(4);
+        facade.editarAutor(autor);
         
-        autor.setNome("Teste update");
+        autor = facade.listarAutor().get(0);
         
-        autorDAO.update(autor);
+        assertEquals(autor.getNome(),"Teste Editado");
+    }
+    
+    @Test
+    public void testeExcluir() throws Exception{
         
-        autor = autorDAO.search(2);
+        inserir();
         
-        autorDAO.delete(autor);
+        autor = facade.listarAutor().get(0);
+       
+        int tamanhoAnterior = facade.listarAutor().size();
+        
+        facade.deletarAutor(autor);
+        
+        assertEquals(tamanhoAnterior - 1, facade.listarAutor().size());
+        
     }
     
 }
