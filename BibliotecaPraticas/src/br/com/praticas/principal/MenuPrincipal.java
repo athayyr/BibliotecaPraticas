@@ -18,6 +18,7 @@ import br.com.praticas.model.bean.Funcionario;
 import br.com.praticas.model.bean.Livro;
 import br.com.praticas.model.bean.Pessoa;
 import br.com.praticas.model.bean.Secao;
+import br.com.praticas.util.Properties;
 import br.com.praticas.util.Util;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,6 +42,16 @@ public class MenuPrincipal {
     private BibliotecaFacadeEmprestimo facadeEmprestimo = new BibliotecaFacadeEmprestimo();
     
     public void executar() throws Exception {
+        String login,senha;
+        do{
+            
+            System.out.println("Informe o login:");
+            login = sc.nextLine();
+            System.out.println("Informe a senha:");
+            senha = sc.nextLine();
+           
+        }while(!facadePessoa.login(login, senha));
+        
         int op;
         
         do{
@@ -136,6 +147,7 @@ public class MenuPrincipal {
                     
                     try{
                         facadePessoa.cadastrarEndereco(endereco);
+                        System.out.println(Properties.SUCESSO_INSERIR_ENDERECO);
                     }catch(Exception ex){
                         ex.getMessage();
                     }
@@ -180,6 +192,7 @@ public class MenuPrincipal {
                             aluno.setCurso(curso);
                             aluno.setMatricula(matricula);
                             facadePessoa.cadastrarAluno(aluno);
+                            System.out.println(Properties.SUCESSO_INSERIR_ALUNO);
                         }
                      }catch(Exception ex){
                         System.out.println(ex.getMessage());
@@ -224,7 +237,7 @@ public class MenuPrincipal {
                             funcionario.setLogin(login);
                             funcionario.setSenha(senha);
                             facadePessoa.cadastrarFuncionario(funcionario);
-                            
+                            System.out.println(Properties.SUCESSO_INSERIR_FUNCIONARIO);
                         }
                      }catch(Exception ex){
                         System.out.println(ex.getMessage());
@@ -240,6 +253,7 @@ public class MenuPrincipal {
                     autor.setNome(nome);
                     try{
                         facadeLivro.cadastrarAutor(autor);
+                        System.out.println(Properties.SUCESSO_INSERIR_AUTOR);
                     }catch(Exception ex){
                         ex.getMessage();
                     }
@@ -254,6 +268,7 @@ public class MenuPrincipal {
                     editora.setNome(nome);
                     try{
                         facadeLivro.cadastrarEditora(editora);
+                        System.out.println(Properties.SUCESSO_INSERIR_EDITORA);
                     }catch(Exception ex){
                         ex.getMessage();
                     }
@@ -268,6 +283,7 @@ public class MenuPrincipal {
                     secao.setDescricao(descricao);
                     try{
                         facadeLivro.cadastrarSecao(secao);
+                        System.out.println(Properties.SUCESSO_INSERIR_SECAO);
                     }catch(Exception ex){
                         ex.getMessage();
                     }
@@ -309,6 +325,7 @@ public class MenuPrincipal {
                             livro.setExemplaresDisponiveis(numExemplares);
                             
                             facadeLivro.cadastrarLivro(livro);
+                            System.out.println(Properties.SUCESSO_INSERIR_LIVRO);
                         }
                     
                     }
