@@ -70,7 +70,7 @@ public class LivroDAO implements ILivroDAO {
             
             st.executeUpdate();
             
-            System.out.println(Properties.getStringErroValue(Properties.SUCESSO_DELETAR_ENDERECO));
+           // System.out.println(Properties.getStringErroValue(Properties.SUCESSO_DELETAR_ENDERECO));
             
             return true;
         } catch (Exception ex) {
@@ -102,13 +102,14 @@ public class LivroDAO implements ILivroDAO {
                 livro.setAutor(DAOFactory.createAutorDAO().search(rs.getInt("autor")));
                 livro.setEditora(DAOFactory.createEditoraDAO().search(rs.getInt("editora")));
                 livro.setSecao(DAOFactory.createSecaoDAO().search(rs.getInt("secao")));
-                livro.setExemplaresDisponiveis(rs.getInt("ExemplaresDisponiveis"));
+                livro.setExemplaresDisponiveis(rs.getInt("disponiveis"));
                 livro.setTitulo(rs.getString("titulo"));
                 
                 
                 lista.add(livro);
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new Exception(Properties.getStringErroValue(Properties.ERRO_LISTAR_LIVRO));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
@@ -160,20 +161,22 @@ public class LivroDAO implements ILivroDAO {
         PreparedStatement st = null;
 
         try {
-            st = connection.prepareStatement("UPDATE livro SET exemplares = ?, autor = ?, \"exemplaresDisponives\"= ?, sesao = ?, editora = ? WHERE id = ? ");
+            st = connection.prepareStatement("UPDATE livro SET exemplares = ?, autor = ?, disponiveis = ?, secao = ?, editora = ?,titulo = ? WHERE id = ? ");
 
             st.setInt(1, livro.getExemplares());
             st.setInt(2, livro.getAutor().getId());
             st.setInt(3, livro.getExemplaresDisponiveis());
             st.setInt(4, livro.getSecao().getId());
             st.setInt(5, livro.getEditora().getId());
+            st.setString(6, livro.getTitulo());
      
-            st.setInt(6, livro.getId());
+            st.setInt(7, livro.getId());
             
             st.executeUpdate();
 
-            System.out.println(Properties.getStringErroValue(Properties.SUCESSO_EDITAR_LIVRO));
+            //System.out.println(Properties.getStringErroValue(Properties.SUCESSO_EDITAR_LIVRO));
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new Exception(Properties.getStringErroValue(Properties.ERRO_EDITAR_LIVRO));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
