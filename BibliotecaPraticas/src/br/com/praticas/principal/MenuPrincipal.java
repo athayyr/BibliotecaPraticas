@@ -277,6 +277,8 @@ public class MenuPrincipal {
                 
                 case 7:{
                     try{
+                        System.out.println("Informe o titulo do livro:");
+                        String titulo = sc.nextLine();
                         System.out.println("Informe o id do autor:");
                         int idAutor = sc.nextInt();
                         sc.nextLine();
@@ -300,6 +302,7 @@ public class MenuPrincipal {
                             sc.nextLine();
                             
                             Livro livro = new Livro();
+                            livro.setTitulo(titulo);
                             livro.setAutor(autor);
                             livro.setEditora(editora);
                             livro.setSecao(secao);
@@ -546,6 +549,8 @@ public class MenuPrincipal {
                             System.out.println("Livro não encontrado!");
                         }
                         else{
+                            System.out.println("Informe o titulo do livro:");
+                            String titulo = sc.nextLine();
                             System.out.println("Informe o id do autor:");
                             int idAutor = sc.nextInt();  
                             sc.nextLine();
@@ -569,6 +574,7 @@ public class MenuPrincipal {
                                 int numExemplares = sc.nextInt();
                                 sc.nextLine();
                                 
+                                livro.setTitulo(titulo);
                                 livro.setAutor(autor);
                                 livro.setEditora(editora);
                                 livro.setSecao(secao);
