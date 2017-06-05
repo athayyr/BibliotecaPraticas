@@ -17,6 +17,7 @@ public class Livro {
     private Autor autor;
     private Editora editora;
     private Secao secao;
+    private String titulo;
 
     public Livro() {
     }
@@ -86,9 +87,17 @@ public class Livro {
         this.secao = secao;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
     @Override
     public String toString() {
-        return "Livro{" + "id=" + id + ", exemplares=" + exemplares + ", exemplaresDisponiveis=" + exemplaresDisponiveis + ", autor=" + autor + ", editora=" + editora + ", secao=" + secao + '}';
+        return "Livro{" + "id=" + id + ", exemplares=" + exemplares + ", exemplaresDisponiveis=" + exemplaresDisponiveis + ", autor=" + autor + ", editora=" + editora + ", secao=" + secao + ", titulo=" + titulo + '}';
     }
     
     
