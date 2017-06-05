@@ -19,7 +19,9 @@ import br.com.praticas.model.bean.Pessoa;
 import br.com.praticas.model.bean.Secao;
 import br.com.praticas.util.Util;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -1059,23 +1061,26 @@ public class MenuPrincipal {
                             System.out.println("O livro nao tem exempares disponiveis!");
                         }
                         else{
-                            System.out.println("Informe a data de entrega:(dd/mm/aaaa)");
-                            String entrega = sc.nextLine();
+                            System.out.println("Informe a quantidade de dias do emprestimo:");
+                            int entrega = sc.nextInt();
                             
                             Emprestimo emprestimo = new Emprestimo();
                             emprestimo.setAluno(aluno);
                             emprestimo.setLivro(livro);
                             emprestimo.setReserva(true);
                             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                            Date data = new Date(System.currentTimeMillis());
+                            Calendar calendar = new GregorianCalendar();
+                            calendar= calendar.getInstance();
+                            Date data = calendar.getTime();
                             formato.format(data);
+                            calendar.add(Calendar.DATE, entrega);
+                            
+                            calendar.set(Calendar.DAY_OF_MONTH,calendar.get(Calendar.DAY_OF_MONTH)+1);
+                            Date dataPrevista = calendar.getTime();
+                            formato.format(dataPrevista);
                             emprestimo.setData(data);
+                            emprestimo.setDataPrevista(dataPrevista);
                             
-                            emprestimo.setEntrega(Util.stringToDate(entrega));
-                            
-                            if(long.class.cast(emprestimo.getDataPrevista()) < long.class.cast(emprestimo.getEntrega())){
-                                System.out.println("Entrega atrasada! Cobre a multa!");
-                            }
                             
                             facadeEmprestimo.cadastrarEmprestimo(emprestimo);
                             
@@ -1086,6 +1091,7 @@ public class MenuPrincipal {
                     }
                     
                 }catch(Exception ex){
+                    ex.printStackTrace();
                     ex.getMessage();
                 }
                 
@@ -1104,9 +1110,14 @@ public class MenuPrincipal {
                     else{
                         emprestimo.setReserva(false);
                         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                        Calendar calendar = new GregorianCalendar();
+                        calendar = calendar.getInstance();
                         Date entrega = new Date(System.currentTimeMillis());
                         formato.format(entrega);
                         emprestimo.setEntrega(entrega);
+                        if(entrega.getTime()>emprestimo.getDataPrevista().getTime()){
+                            System.out.println("Entrega atrasada, cobre a multa!");
+                        }
                         
                         facadeEmprestimo.editarEmprestimo(emprestimo);
                         
@@ -1114,7 +1125,8 @@ public class MenuPrincipal {
                         facadeLivro.editarLivro(emprestimo.getLivro());
                     }
                 }catch (Exception ex){
-                   ex.getMessage();
+                   ex.printStackTrace();
+                    ex.getMessage();
                 }
                 
                 break;
