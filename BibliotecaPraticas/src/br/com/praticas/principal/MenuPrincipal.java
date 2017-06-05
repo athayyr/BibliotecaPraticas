@@ -8,7 +8,6 @@ package br.com.praticas.principal;
 import br.com.praticas.facade.BibliotecaFacadeEmprestimo;
 import br.com.praticas.facade.BibliotecaFacadeLivro;
 import br.com.praticas.facade.BibliotecaFacadePessoa;
-import br.com.praticas.factory.DAOFactory;
 import br.com.praticas.model.bean.Aluno;
 import br.com.praticas.model.bean.Autor;
 import br.com.praticas.model.bean.Editora;
@@ -18,15 +17,9 @@ import br.com.praticas.model.bean.Funcionario;
 import br.com.praticas.model.bean.Livro;
 import br.com.praticas.model.bean.Pessoa;
 import br.com.praticas.model.bean.Secao;
-import br.com.praticas.model.dao.AutorDAO;
-import br.com.praticas.model.dao.EnderecoDAO;
-import br.com.praticas.model.dao.PessoaDAO;
 import br.com.praticas.util.Util;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -1076,7 +1069,7 @@ public class MenuPrincipal {
                             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                             Date data = new Date(System.currentTimeMillis());
                             formato.format(data);
-                            emprestimo.setData(data);
+                            emprestimo.setData(new Date());
                             
                             emprestimo.setEntrega(Util.stringToDate(entrega));
                             

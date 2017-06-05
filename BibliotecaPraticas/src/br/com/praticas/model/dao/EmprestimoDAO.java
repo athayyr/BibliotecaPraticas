@@ -27,6 +27,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
     private Connection connection;
     private BibliotecaFacadePessoa facadePessoa;
     private BibliotecaFacadeLivro facadeLivro;
+    
     @Override
     public boolean create(Emprestimo emprestimo) {
         connection = ConnectionFactory.getConnection();
@@ -45,6 +46,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
 
             return true;
         } catch (SQLException ex) {
+            ex.printStackTrace();
             return false;
         } finally {
             ConnectionFactory.closeConnection(connection, st);
