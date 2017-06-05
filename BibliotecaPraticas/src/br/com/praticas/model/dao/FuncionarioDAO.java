@@ -165,5 +165,27 @@ public class FuncionarioDAO implements IFuncionarioDao{
             ConnectionFactory.closeConnection(connection, st);
         }
     }
+
+    @Override
+    public boolean verificarLogin(String login, String senha) throws Exception {
+        connection = ConnectionFactory.getConnection();
+        PreparedStatement st = null;
+
+        try {
+            st = connection.prepareStatement("SELECT * FROM funcionario WHERE login=? AND senha = ?");
+
+            st.setString(1, login);
+            st.setString(2, senha);
+
+            ResultSet rs = st.executeQuery();
+            
+            if (rs.next()) {
+                return true;
+            }   
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
     
 }
