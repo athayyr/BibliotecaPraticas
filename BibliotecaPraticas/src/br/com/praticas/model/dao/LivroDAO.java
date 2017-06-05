@@ -37,14 +37,14 @@ public class LivroDAO implements ILivroDAO {
         PreparedStatement st = null;
         
         try {
-            st = connection.prepareStatement("INSERT INTO livro (Titulo, Exemplares, Autor, Editora, Secao, ExemplaresDisponiveis) VALUES (?,?,?,?,?,?)");
-            st.setString(1, livro.getTitulo());
-            st.setInt(2, livro.getExemplares());
-            st.setInt(3, livro.getAutor().getId());
-            st.setInt(4, livro.getEditora().getId());
-            st.setInt(5, livro.getSecao().getId());
-            st.setInt(6, livro.getExemplaresDisponiveis());
+            st = connection.prepareStatement("INSERT INTO livro (exemplares, autor, editora, secao, disponiveis,titulo) VALUES (?,?,?,?,?,?)");
             
+            st.setInt(1, livro.getExemplares());
+            st.setInt(2, livro.getAutor().getId());
+            st.setInt(3, livro.getEditora().getId());
+            st.setInt(4, livro.getSecao().getId());
+            st.setInt(5, livro.getExemplaresDisponiveis());
+            st.setString(6, livro.getTitulo());
             st.executeUpdate();
             
             return true;
@@ -90,7 +90,7 @@ public class LivroDAO implements ILivroDAO {
         PreparedStatement st = null;
 
         try {
-            st = connection.prepareStatement("SELECT id,titulo,exemplares,autor,ExemplaresDisponiveis,secao,editora FROM public.livro");
+            st = connection.prepareStatement("SELECT Exemplares, Autor, Editora, Sesao, \"exemplaresDisponives\",titulo FROM public.livro");
 
             ResultSet rs = st.executeQuery();
 
@@ -154,7 +154,7 @@ public class LivroDAO implements ILivroDAO {
         PreparedStatement st = null;
 
         try {
-            st = connection.prepareStatement("UPDATE livro SET exemplares = ?, autor = ?, exemplaresDisponiveis= ?, secao = ?, editora = ? WHERE id = ? ");
+            st = connection.prepareStatement("UPDATE livro SET exemplares = ?, autor = ?, \"exemplaresDisponives\"= ?, sesao = ?, editora = ? WHERE id = ? ");
 
             st.setInt(1, livro.getExemplares());
             st.setInt(2, livro.getAutor().getId());
@@ -174,7 +174,6 @@ public class LivroDAO implements ILivroDAO {
         }
     }
 
-    
     public void limparDados() throws Exception {
 
         try {
