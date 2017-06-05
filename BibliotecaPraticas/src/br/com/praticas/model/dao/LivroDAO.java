@@ -37,7 +37,7 @@ public class LivroDAO implements ILivroDAO {
         PreparedStatement st = null;
         
         try {
-            st = connection.prepareStatement("INSERT INTO livro Titulo,Exemplares,Autor,Editora,Secao,ExemplaresDisponiveis) VALUES (?,?,?,?,?,?);");
+            st = connection.prepareStatement("INSERT INTO livro (Titulo, Exemplares, Autor, Editora, Secao, ExemplaresDisponiveis) VALUES (?,?,?,?,?,?)");
             st.setString(1, livro.getTitulo());
             st.setInt(2, livro.getExemplares());
             st.setInt(3, livro.getAutor().getId());
