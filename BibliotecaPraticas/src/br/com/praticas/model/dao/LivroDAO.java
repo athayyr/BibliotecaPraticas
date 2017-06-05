@@ -6,7 +6,6 @@
 
 package br.com.praticas.model.dao;
 
-import br.com.praticas.interfaces.ILivroDAO;
 import br.com.praticas.factory.ConnectionFactory;
 import br.com.praticas.factory.DAOFactory;
 import br.com.praticas.model.bean.Editora;
@@ -20,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import br.com.praticas.interfaces.ILivroDAO;
 
 /**
  *
@@ -30,32 +30,24 @@ public class LivroDAO implements ILivroDAO {
     private Connection connection;
     
     @Override
-    public int create(Livro livro) throws Exception {
+    public boolean create(Livro livro) throws Exception {
                 
         connection = ConnectionFactory.getConnection();
         
         PreparedStatement st = null;
         
-        String sql = "INSERT INTO livro (exemplares,autor,exemplaresDisponiveis,secao,editora) VALUES (?,?,?,?,?)";
-        
         try {
-            st = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            st.setInt(1, livro.getExemplares());
-            st.setInt(2, livro.getAutor().getId());
-            st.setInt(3, livro.getExemplaresDisponiveis());
-            st.setInt(4, livro.getSecao().getId());
-            st.setInt(5, livro.getEditora().getId());
+            st = connection.prepareStatement("INSERT INTO livro Titulo,Exemplares,Autor,Editora,Secao,ExemplaresDisponiveis) VALUES (?,?,?,?,?,?);");
+            st.setString(1, livro.getTitulo());
+            st.setInt(2, livro.getExemplares());
+            st.setInt(3, livro.getAutor().getId());
+            st.setInt(4, livro.getEditora().getId());
+            st.setInt(5, livro.getSecao().getId());
+            st.setInt(6, livro.getExemplaresDisponiveis());
             
             st.executeUpdate();
             
-            int idLivro = 0;
-            
-            ResultSet rs = st.getGeneratedKeys();
-            
-            if (rs.next()) {
-                idLivro = rs.getInt(1);
-            }
-            return idLivro;
+            return true;
         } catch (Exception e) {
             throw new Exception(Properties.getStringErroValue(Properties.ERRO_INSERIR_LIVRO));
         } finally {
@@ -97,7 +89,7 @@ public class LivroDAO implements ILivroDAO {
         PreparedStatement st = null;
 
         try {
-            st = connection.prepareStatement("SELECT id, exemplares,autor,exemplaresDisponiveis,secao,editora FROM public.livro");
+            st = connection.prepareStatement("SELECT id,titulo,exemplares,autor,ExemplaresDisponiveis,secao,editora FROM public.livro");
 
             ResultSet rs = st.executeQuery();
 
@@ -105,11 +97,12 @@ public class LivroDAO implements ILivroDAO {
                 Livro livro = new Livro();
                 
                 livro.setId(rs.getInt("id"));
-                livro.setExemplares(rs.getInt("exemplares"));
-                livro.setAutor(DAOFactory.createAutorDAO().search(rs.getInt("autor")));
-                livro.setExemplaresDisponiveis(rs.getInt("exemplaresDisponiveis"));
-                livro.setSecao(DAOFactory.createSecaoDAO().search(rs.getInt("secao")));
-                livro.setEditora(DAOFactory.createEditoraDAO().search(rs.getInt("editora")));
+                livro.setTitulo(rs.getString("Titulo"));
+                livro.setExemplares(rs.getInt("Exemplares"));
+                livro.setAutor(DAOFactory.createAutorDAO().search(rs.getInt("Autor")));
+                livro.setExemplaresDisponiveis(rs.getInt("ExemplaresDisponiveis"));
+                livro.setSecao(DAOFactory.createSecaoDAO().search(rs.getInt("Secao")));
+                livro.setEditora(DAOFactory.createEditoraDAO().search(rs.getInt("Editora")));
                 
                 lista.add(livro);
             }
@@ -167,7 +160,7 @@ public class LivroDAO implements ILivroDAO {
             st.setInt(3, livro.getExemplaresDisponiveis());
             st.setInt(4, livro.getSecao().getId());
             st.setInt(5, livro.getEditora().getId());
-            
+     
             st.setInt(6, livro.getId());
             
             st.executeUpdate();
