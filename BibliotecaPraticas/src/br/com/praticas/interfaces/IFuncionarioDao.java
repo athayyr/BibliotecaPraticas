@@ -22,4 +22,6 @@ public interface IFuncionarioDao {
     Funcionario search(int id) throws Exception;
 
     void update(Funcionario funcionario) throws Exception;
+    
+    boolean verificarLogin(String login,String senha) throws Exception;
 }
