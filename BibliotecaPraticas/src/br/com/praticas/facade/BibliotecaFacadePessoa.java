@@ -123,4 +123,10 @@ public class BibliotecaFacadePessoa {
         return funcionario;
     }
     
+    public boolean login(String login, String senha) throws Exception{
+        if(funcionarioDAO.verificarLogin(login, senha)){
+            return true;
+        }
+        return false;
+    }   
 }
