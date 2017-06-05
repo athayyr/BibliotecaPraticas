@@ -90,7 +90,7 @@ public class LivroDAO implements ILivroDAO {
         PreparedStatement st = null;
 
         try {
-            st = connection.prepareStatement("SELECT Exemplares, Autor, Editora, Sesao, \"exemplaresDisponives\",titulo FROM public.livro");
+            st = connection.prepareStatement("SELECT id,exemplares, autor, editora, secao, disponiveis,titulo FROM public.livro");
 
             ResultSet rs = st.executeQuery();
 
@@ -98,12 +98,13 @@ public class LivroDAO implements ILivroDAO {
                 Livro livro = new Livro();
                 
                 livro.setId(rs.getInt("id"));
-                livro.setTitulo(rs.getString("Titulo"));
-                livro.setExemplares(rs.getInt("Exemplares"));
-                livro.setAutor(DAOFactory.createAutorDAO().search(rs.getInt("Autor")));
+                livro.setExemplares(rs.getInt("exemplares"));
+                livro.setAutor(DAOFactory.createAutorDAO().search(rs.getInt("autor")));
+                livro.setEditora(DAOFactory.createEditoraDAO().search(rs.getInt("editora")));
+                livro.setSecao(DAOFactory.createSecaoDAO().search(rs.getInt("secao")));
                 livro.setExemplaresDisponiveis(rs.getInt("ExemplaresDisponiveis"));
-                livro.setSecao(DAOFactory.createSecaoDAO().search(rs.getInt("Secao")));
-                livro.setEditora(DAOFactory.createEditoraDAO().search(rs.getInt("Editora")));
+                livro.setTitulo(rs.getString("titulo"));
+                
                 
                 lista.add(livro);
             }
@@ -125,7 +126,7 @@ public class LivroDAO implements ILivroDAO {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT * FROM livro WHERE id=?;";
+            String sql = "SELECT id,exemplares, autor, editora, secao, disponiveis,titulo FROM livro WHERE id=?;";
             st = connection.prepareStatement(sql);
 
             st.setInt(1, id);
@@ -134,13 +135,18 @@ public class LivroDAO implements ILivroDAO {
 
             if (rs.next()) {
                 livro = new Livro();
-
-                String nome = rs.getString("nome");
-
-                livro.setId(id);
+                livro.setId(rs.getInt("id"));
+                livro.setExemplares(rs.getInt("exemplares"));
+                livro.setAutor(DAOFactory.createAutorDAO().search(rs.getInt("autor")));
+                livro.setEditora(DAOFactory.createEditoraDAO().search(rs.getInt("editora")));
+                livro.setSecao(DAOFactory.createSecaoDAO().search(rs.getInt("secao")));
+                livro.setExemplaresDisponiveis(rs.getInt("disponiveis"));
+                livro.setTitulo(rs.getString("titulo"));
             }
+            
             return livro;
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new Exception(Properties.getStringErroValue(Properties.ERRO_BUSCAR_LIVRO));
         } finally {
             ConnectionFactory.closeConnection(connection, st, rs);
