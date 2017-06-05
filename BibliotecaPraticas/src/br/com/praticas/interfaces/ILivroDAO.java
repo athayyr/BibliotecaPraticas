@@ -10,11 +10,10 @@ import java.util.List;
 
 /**
  *
- * @author VAAR
+ * @author José Higor
  */
 public interface ILivroDAO {
-
-    int create(Livro livro) throws Exception;
+    boolean create(Livro livro) throws Exception;
 
     boolean delete(Livro livro) throws Exception;
 
@@ -23,5 +22,4 @@ public interface ILivroDAO {
     Livro search(int id) throws Exception;
 
     void update(Livro livro) throws Exception;
-
 }
