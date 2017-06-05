@@ -121,5 +121,9 @@ public class BibliotecaFacadeLivro {
        Livro livro = livroDAO.search(id);
        return livro;
    }
-    
+   
+   public void limparDadosLivro() throws Exception{
+       livroDAO.limparDados();
+   }
+   
 }

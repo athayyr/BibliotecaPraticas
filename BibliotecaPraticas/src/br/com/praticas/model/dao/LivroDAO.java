@@ -49,6 +49,7 @@ public class LivroDAO implements ILivroDAO {
             
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception(Properties.getStringErroValue(Properties.ERRO_INSERIR_LIVRO));
         } finally {
             ConnectionFactory.closeConnection(connection, st);
@@ -172,5 +173,31 @@ public class LivroDAO implements ILivroDAO {
             ConnectionFactory.closeConnection(connection, st);
         }
     }
+
     
+    public void limparDados() throws Exception {
+
+        try {
+            // obter conexao
+            connection = ConnectionFactory.getConnection();
+ 
+            // definir a string sql
+            String sql = "delete from livro";
+
+            // com a conexao, cria-se o comando
+            PreparedStatement st = connection.prepareStatement(sql);
+            
+            // executa
+            st.executeUpdate();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(Properties.getStringErroValue(Properties.ERRO_DELETAR_LIVRO));
+        } finally {
+            // libera conexao
+            connection.close();
+        }
+
+    }    
 }

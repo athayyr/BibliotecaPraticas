@@ -22,4 +22,6 @@ public interface ILivroDAO {
     Livro search(int id) throws Exception;
 
     void update(Livro livro) throws Exception;
+    
+    void limparDados() throws Exception;
 }
