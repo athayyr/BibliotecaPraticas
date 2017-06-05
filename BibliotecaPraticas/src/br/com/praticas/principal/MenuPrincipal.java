@@ -49,7 +49,7 @@ public class MenuPrincipal {
             login = sc.nextLine();
             System.out.println("Informe a senha:");
             senha = sc.nextLine();
-           
+            
         }while(!facadePessoa.login(login, senha));
         
         int op;
