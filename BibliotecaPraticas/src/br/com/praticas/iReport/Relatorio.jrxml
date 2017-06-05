@@ -42,12 +42,12 @@ FROM
 			<staticText>
 				<reportElement x="1" y="12" width="100" height="20" uuid="2304f9bb-e223-49da-aecf-9c9b45d9a69e"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Nome do Aluno:]]></text>
+				<text><![CDATA[ID do Aluno:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="111" y="12" width="100" height="20" uuid="baa7d4f9-339d-4c43-8489-0fc0af809715"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Nome do Livro:]]></text>
+				<text><![CDATA[ID do Livro:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="226" y="12" width="100" height="20" uuid="66330971-090c-4e02-abc4-cf70668ff389"/>

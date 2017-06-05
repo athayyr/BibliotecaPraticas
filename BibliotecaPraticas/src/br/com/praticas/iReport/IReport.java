@@ -25,9 +25,9 @@ public class IReport {
     public void iReport(){
         Connection connection = ConnectionFactory.getConnection();
         
-        //String src = Properties.getConfiguracaoValue(Properties.IREPORT);
+        String src = Properties.getConfiguracaoValue(Properties.IREPORT);
         
-        String src = "br\\com\\praticas\\iReport\\Relatorio.jasper";
+        //String src = "src\\br\\com\\praticas\\iReport\\Relatorio.jasper";
         
         JasperPrint jp = null;
         try {
